@@ -72,7 +72,7 @@ static e_Ret main_Init(void)
         return eRet;
     }
     
-    eRet = screen_CreateWindow(TRUE);
+    eRet = screen_CreateWindow(FALSE);
     if (eRet){
         printf("Janela principal nao pode ser criada!\n");
         return eRet;
@@ -80,6 +80,12 @@ static e_Ret main_Init(void)
 
     // Se chegou aqui o SDL está em execução
     control_SetRunning(TRUE);
+
+    eRet = screen_CreatePlayer();
+    if (eRet){
+        printf("Textura do jogador principal nao pode ser criada!\n");
+        return eRet;
+    }
 
     return RET_OK;
 }

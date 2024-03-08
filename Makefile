@@ -31,7 +31,11 @@ DEFS		:= -DAPP_NAME=\"${PROJECT}\" -DVERSION=\"${APP_VERSION}\"
 
 # Flags
 CFLAGS := -Wall -Wextra -I$(INC_DIR) ${DEFS}
-LDFLAGS := -L$(LIB_DIR) -lSDL2 -lSDL2_ttf
+# SDL2: 		https://github.com/libsdl-org/SDL/releases/tag/release-2.30.1
+# SDL2_ttf: 	https://github.com/libsdl-org/SDL_ttf/releases/tag/release-2.22.0
+# SDL2_image: 	https://github.com/libsdl-org/SDL_image/releases/tag/release-2.8.2
+# usar o pacote "SDL2_XXX_devel_V.V.V_mingw.zip" e a variante "x86_64-w64-mingw32"
+LDFLAGS := -L$(LIB_DIR) -lSDL2 -lSDL2_ttf -lSDL2_image
 
 # Files
 SRC_FILES := $(wildcard $(SRC_DIR)/*.c)

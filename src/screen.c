@@ -24,9 +24,15 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
+static int              giCount = 0;
+
 static SDL_Renderer    *tRenderer;
 static SDL_Window      *tWindow;
-static int              giCount = 0;
+
+// Caracteristicas do personagem
+static SDL_Texture     *tPlayerTexture;
+static SDL_Rect         tSourceRectPlayer;
+static SDL_Rect         tDestRectPlayer;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -59,7 +65,7 @@ static e_Ret screen_DrawBackground(void)
         return RET_SDL_ERROR;
     }
 
-    return eRet;
+    return RET_OK;
 }
 
 /*****************************************************************************
@@ -110,12 +116,37 @@ e_Ret screen_CreateWindow(bool bFullscreen)
     return RET_OK;
 }
 
+e_Ret screen_CreatePlayer(void)
+{
+    SDL_Surface *tTempSurface = IMG_Load("player.png");
+    if (tTempSurface == NULL) {
+        printf("Não foi possivel carregar a imagem! SDL_Error: %s\n", SDL_GetError());
+        return RET_SDL_ERROR;
+    }
+
+    tPlayerTexture = SDL_CreateTextureFromSurface(tRenderer, tTempSurface);
+    SDL_FreeSurface(tTempSurface);
+    if (tPlayerTexture == NULL) {
+        printf("Não foi possivel criar a textura! SDL_Error: %s\n", SDL_GetError());
+        return RET_SDL_ERROR;
+    }
+
+    tDestRectPlayer.h = 64;
+    tDestRectPlayer.w = 64;
+
+    return RET_OK;
+}
+
 e_Ret screen_Update(void)
 {
     e_Ret eRet = RET_OK;
     giCount++;
-    printf("giCount = [%d]\n", giCount);
+    // tSourceRect
 
+    //Posição do player
+    tDestRectPlayer.x = giCount;
+
+    printf("giCount = [%d]\n", giCount);
     return eRet;
 }
 
@@ -123,15 +154,24 @@ e_Ret screen_Render(void)
 {
     e_Ret eRet = RET_OK;
 
+    //Limpa a tela
     eRet = SDL_RenderClear(tRenderer);
     if (eRet < 0) {
         printf("Nao foi possivel limpar o render! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
 
+    //Renderiza o Personagem
+    eRet = SDL_RenderCopy(tRenderer, tPlayerTexture, NULL, &tDestRectPlayer);
+    if (eRet < 0) {
+        printf("Nao foi possivel renderizar o personagem! SDL_Error: %s\n", SDL_GetError());
+        return RET_SDL_ERROR;
+    }
+
+    //Atualiza o Render
     SDL_RenderPresent(tRenderer); 
 
-    return eRet;
+    return RET_OK;
 }
 
 e_Ret screen_DestroySDL(void)

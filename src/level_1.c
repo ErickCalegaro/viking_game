@@ -22,7 +22,6 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
-
 /*****************************************************************************
  * Private Function Prototypes
  *****************************************************************************/
@@ -39,10 +38,15 @@
 
 e_Ret level_1_Loop(e_State * eNextState)
 {
-    e_Ret eRet = RET_OK;
     eNextState = eNextState; //Unref parameter
+    
+    e_Ret   eRet         = RET_OK;
+    Uint32  uiFrameStart = 0;
+    int     iFrameTime   = 0;
 
     do{
+        uiFrameStart = SDL_GetTicks();
+
         control_HandleEvents();
         screen_Update();
         eRet = screen_Render();
@@ -51,7 +55,13 @@ e_Ret level_1_Loop(e_State * eNextState)
             break;
         }
         
+        iFrameTime = SDL_GetTicks() - uiFrameStart;
+
+        if (FRAME_DELAY > iFrameTime){ //Trava de FPS
+            SDL_Delay(FRAME_DELAY - iFrameTime);
+        }
+        
     } while (control_GetRunning());
 
-    return eRet;
+    return RET_OK;
 }

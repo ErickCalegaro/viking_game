@@ -6,6 +6,7 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_test_font.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -14,6 +15,9 @@
 /*****************************************************************************
  * Preprocessor Macros and Defines
  *****************************************************************************/
+
+#define FPS         60
+#define FRAME_DELAY 1000 / FPS
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
@@ -40,6 +44,14 @@ e_Ret screen_InitSDL(void);
  *          RET_INIT_ERROR - Caso falhe; 
  */
 e_Ret screen_CreateWindow(bool bFullscreen);
+
+/**
+ * \brief Cria a textura do personagem principal.
+ * \param void
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+e_Ret screen_CreatePlayer(void);
 
 /**
  * \brief Atualiza os componentes da tela.
