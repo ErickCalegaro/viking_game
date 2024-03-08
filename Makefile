@@ -59,6 +59,6 @@ $(BUILD_DIR):
 	$(MKDIR) $@
 
 clean:
-	$(DEL) -rf $(BUILD_DIR)
+	$(DEL) -rf $(BUILD_DIR) $(OUTPUT_DIR)
 
 .PHONY: all clean

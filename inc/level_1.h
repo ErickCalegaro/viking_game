@@ -1,52 +1,30 @@
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __LEVEL_1_H__
+#define __LEVEL_1_H__
 /*****************************************************************************
  * Includes
  *****************************************************************************/
-#include <windows.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+
 
 /*****************************************************************************
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
+
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
-typedef enum e_Ret_tag {
-  RET_OK = 0,
-  RET_ABORT,
-  RET_INV_PARAM,
-  RET_INIT_ERROR,
-  RET_SDL_ERROR,
-} e_Ret;
 
-typedef enum e_State_tag {
-    STATE_MENU = 0,
-    STATE_PAUSE,
-    STATE_DEATH,
-    STATE_TRAVEL,
-    STATE_LEVEL_1,
-    STATE_LEVEL_2,
-    STATE_LEVEL_3,
-    STATE_LEVEL_4,
-    STATE_LEVEL_5,
-    STATE_GAMEOVER,
-    STATE_WIN,
-} e_State;
 
 /*****************************************************************************
  * Public Function Prototypes
  *****************************************************************************/
 
 /**
- * \brief Função principal utilizada pelo windows.
- * \param void
- * \returns Sempre retornará RET_OK 
+ * \brief Loop de controle do nivel 1.
+ * \param eNextState informa qual deve ser a proxima tela a ser exibida
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_???_ERROR - Caso falhe;  
  */
-int main(void);
+e_Ret level_1_Loop(e_State * eNextState);
 
 #endif

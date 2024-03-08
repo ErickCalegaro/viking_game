@@ -1,5 +1,5 @@
 /**
- * \file    control.c
+ * \file    level_1.c
  * \version 0.0.1
  * \date    08/03/2024
  * \author  Erick Calegaro
@@ -22,7 +22,6 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
-static bool gbIsRunning = FALSE;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -38,28 +37,21 @@ static bool gbIsRunning = FALSE;
  * Public Function Definitions
  *****************************************************************************/
 
-bool control_GetRunning(void)
+e_Ret level_1_Loop(e_State * eNextState)
 {
-    return gbIsRunning;
-}
+    e_Ret eRet = RET_OK;
+    eNextState = eNextState; //Unref parameter
 
-void control_SetRunning(bool bIsRunning)
-{
-    gbIsRunning = bIsRunning;
-}
-
-e_Ret control_HandleEvents(void)
-{
-    SDL_Event tEvent;
-    SDL_PollEvent(&tEvent);
-    switch (tEvent.type)
-    {
-        case SDL_QUIT:
-            control_SetRunning(FALSE);
-            return RET_ABORT;
-        default:
+    do{
+        control_HandleEvents();
+        screen_Update();
+        eRet = screen_Render();
+        if (eRet){
+            printf("Nao foi possivel renderizar a tela!\n");
             break;
-    }
+        }
+        
+    } while (control_GetRunning());
 
-    return RET_OK;
+    return eRet;
 }
