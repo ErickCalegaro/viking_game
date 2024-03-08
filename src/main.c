@@ -8,8 +8,10 @@
 /*****************************************************************************
  * Includes
  *****************************************************************************/
+
 #include "main.h"
 #include "screen.h"
+#include "control.h"
 
 /*****************************************************************************
  * Preprocessor Macros and Defines
@@ -18,7 +20,8 @@
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
-static e_State geState = STATE_MENU;
+
+static e_State geState = STATE_LEVEL_1; //Ainda não temos menu, indo direto ao jogo
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -58,11 +61,27 @@ static e_State main_GetState(void);
 /*****************************************************************************
  * Private Function Definitions
  *****************************************************************************/
+
 static e_Ret main_Init(void)
 {
     e_Ret eRet = RET_OK;
-    eRet = screen_CreateWindow();
-    return eRet;
+
+    eRet = screen_InitSDL();
+    if (eRet){
+        printf("Biblioteca Grafica nao pode ser inicializada!\n");
+        return eRet;
+    }
+    
+    eRet = screen_CreateWindow(TRUE);
+    if (eRet){
+        printf("Janela principal nao pode ser criada!\n");
+        return eRet;
+    }
+
+    // Se chegou aqui o SDL está em execução
+    control_SetRunning(TRUE);
+
+    return RET_OK;
 }
 
 static e_Ret main_Loop(void)
@@ -82,6 +101,7 @@ static e_Ret main_Loop(void)
             case STATE_TRAVEL:      // Cutscene de viagem
                 break;
             case STATE_LEVEL_1:     // Nivel 1 - Floresta Viking
+                eRet = level_1_Loop(&eNextState);
                 break;
             case STATE_LEVEL_2:     // Nivel 2 - Montanhas Geladas
                 break;
@@ -103,7 +123,10 @@ static e_Ret main_Loop(void)
             main_SetState(eNextState);
         }
         
-    } while (TRUE);
+    } while (control_GetRunning());
+    
+    // Recebido comando para matar o jogo
+    screen_DestroySDL();
 
     return RET_OK;
 }
@@ -123,7 +146,19 @@ static e_State main_GetState(void)
  *****************************************************************************/
 int main(void)
 {
-    main_Init();
-    main_Loop();
+    e_Ret eRet = RET_OK;
+
+    eRet = main_Init();
+    if (eRet){
+        printf("Falha na inicializacao dos componentes!\n");
+        return RET_OK;
+    }
+
+    eRet = main_Loop();
+    if (eRet){
+        printf("Execucao encerrada!\n");
+        return RET_OK;
+    }
+
     return RET_OK;
 }
