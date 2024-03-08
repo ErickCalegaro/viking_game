@@ -30,9 +30,8 @@ static SDL_Renderer    *tRenderer;
 static SDL_Window      *tWindow;
 
 // Caracteristicas do personagem
-static SDL_Texture     *tPlayerTexture;
-static SDL_Rect         tSourceRectPlayer;
-static SDL_Rect         tDestRectPlayer;
+t_GameObject tPlayerObject;
+t_GameObject tEnemyObject;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -45,6 +44,22 @@ static SDL_Rect         tDestRectPlayer;
  *          RET_SDL_ERROR - Caso falhe; 
  */
 static e_Ret screen_DrawBackground(void); 
+
+/**
+ * \brief Cria a textura do personagem principal.
+ * \param void
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+static e_Ret screen_CreatePlayer(void);
+
+/**
+ * \brief Cria a textura do inimigo da fase.
+ * \param void // !TODO: Passar e_State como parametro para alterar o asset
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+static e_Ret screen_CreateEnemy(void);
 
 /*****************************************************************************
  * Private Function Definitions
@@ -67,6 +82,33 @@ static e_Ret screen_DrawBackground(void)
 
     return RET_OK;
 }
+
+static e_Ret screen_CreatePlayer(void)
+{
+    e_Ret eRet = RET_OK;
+    memset(&tPlayerObject, 0x00, sizeof(tPlayerObject));
+    eRet = object_Create(&tPlayerObject, TEXTURE_PLAYER, tRenderer, 0, 0);
+    if (eRet){
+        printf("Nao foi possivel criar o objeto Player!\n");
+        return RET_INIT_ERROR;
+    }
+    
+    return RET_OK;
+}
+
+static e_Ret screen_CreateEnemy(void)
+{
+    e_Ret eRet = RET_OK;
+    memset(&tEnemyObject, 0x00, sizeof(tEnemyObject));
+    eRet = object_Create(&tEnemyObject, TEXTURE_WARRIOR, tRenderer, 50, 50);
+    if (eRet){
+        printf("Nao foi possivel criar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
+    }
+    
+    return RET_OK;
+}
+
 
 /*****************************************************************************
  * Public Function Definitions
@@ -113,19 +155,15 @@ e_Ret screen_CreateWindow(bool bFullscreen)
         return RET_INIT_ERROR;
     }
 
-    return RET_OK;
-}
-
-e_Ret screen_CreatePlayer(void)
-{
-    tPlayerTexture = texture_Load(TEXTURE_PLAYER, tRenderer);
-    if (tPlayerTexture == NULL){
-        printf("Não foi possivel criar a textura para do player!\n");
-        return RET_SDL_ERROR;
+    if (screen_CreatePlayer()){
+        printf("Textura do jogador nao pode ser criada!\n");
+        return RET_INIT_ERROR;
     }
 
-    tDestRectPlayer.h = 64;
-    tDestRectPlayer.w = 64;
+    if (screen_CreateEnemy()){
+        printf("Textura do inimigo nao pode ser criada!\n");
+        return RET_INIT_ERROR;
+    }
 
     return RET_OK;
 }
@@ -136,8 +174,19 @@ e_Ret screen_Update(void)
     giCount++;
     // tSourceRect
 
-    //Posição do player
-    tDestRectPlayer.x = giCount;
+    //Posição do jogador
+    eRet = object_Update(&tPlayerObject);
+    if (eRet){
+        printf("Nao foi possivel atualizar o objeto Player!\n");
+        return RET_INIT_ERROR;
+    }
+
+    //Posição do inimigo
+    eRet = object_Update(&tEnemyObject);
+    if (eRet){
+        printf("Nao foi possivel atualizar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
+    }
 
     printf("giCount = [%d]\n", giCount);
     return eRet;
@@ -154,11 +203,18 @@ e_Ret screen_Render(void)
         return RET_SDL_ERROR;
     }
 
-    //Renderiza o Personagem
-    eRet = SDL_RenderCopy(tRenderer, tPlayerTexture, NULL, &tDestRectPlayer);
-    if (eRet < 0) {
-        printf("Nao foi possivel renderizar o personagem! SDL_Error: %s\n", SDL_GetError());
-        return RET_SDL_ERROR;
+    //Renderiza o jogador
+    eRet = object_Render(&tPlayerObject);
+    if (eRet){
+        printf("Nao foi possivel renderizar o objeto Player!\n");
+        return RET_INIT_ERROR;
+    }
+
+    //Renderiza o inimigo
+    eRet = object_Render(&tEnemyObject);
+    if (eRet){
+        printf("Nao foi possivel renderizar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
     }
 
     //Atualiza o Render

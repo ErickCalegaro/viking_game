@@ -5,7 +5,8 @@
         "screen.h": "c",
         "main.h": "c",
         "level_1.h": "c",
-        "sdl.h": "c"
+        "sdl.h": "c",
+        "object.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

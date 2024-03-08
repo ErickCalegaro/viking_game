@@ -1,5 +1,5 @@
 /**
- * \file    level_1.c
+ * \file    texture.c
  * \version 0.0.1
  * \date    08/03/2024
  * \author  Erick Calegaro

@@ -11,6 +11,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "texture.h"
+#include "object.h"
 #include "level_1.h"
 
 /*****************************************************************************
@@ -20,7 +21,10 @@
 #define FPS         60
 #define FRAME_DELAY 1000 / FPS
 
-#define TEXTURE_PLAYER "player.png"
+#define TEXTURE_PLAYER  "player.png"
+#define TEXTURE_WOLF    "wolf.png"
+#define TEXTURE_TROLL   "troll.png"
+#define TEXTURE_WARRIOR "warrior.png"
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
@@ -47,14 +51,6 @@ e_Ret screen_InitSDL(void);
  *          RET_INIT_ERROR - Caso falhe; 
  */
 e_Ret screen_CreateWindow(bool bFullscreen);
-
-/**
- * \brief Cria a textura do personagem principal.
- * \param void
- * \returns RET_OK - Caso sucesso; 
- *          RET_SDL_ERROR - Caso falhe; 
- */
-e_Ret screen_CreatePlayer(void);
 
 /**
  * \brief Atualiza os componentes da tela.
