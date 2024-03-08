@@ -37,7 +37,7 @@
  * Public Function Definitions
  *****************************************************************************/
 
-SDL_Texture * texture_Load(const char * psTexturePath, SDL_Renderer * ptRenderer)
+SDL_Texture * texture_Load(const char * psTexturePath)
 {
     SDL_Surface *tTempSurface = IMG_Load(psTexturePath);
     if (tTempSurface == NULL) {
@@ -45,7 +45,7 @@ SDL_Texture * texture_Load(const char * psTexturePath, SDL_Renderer * ptRenderer
         return NULL;
     }
 
-    SDL_Texture *tLocalTexture = SDL_CreateTextureFromSurface(ptRenderer, tTempSurface);
+    SDL_Texture *tLocalTexture = SDL_CreateTextureFromSurface(gptRenderer, tTempSurface);
     SDL_FreeSurface(tTempSurface);
     if (tLocalTexture == NULL) {
         printf("Não foi possivel criar a textura para [%s]! SDL_Error: %s\n", psTexturePath, SDL_GetError());

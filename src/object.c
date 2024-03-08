@@ -37,11 +37,9 @@
  * Public Function Definitions
  *****************************************************************************/
 
-e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, SDL_Renderer * ptRenderer, int iPosX, int iPosY)
+e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, int iPosX, int iPosY)
 {
-    ptGameObject->ptRenderer = ptRenderer;
-
-    ptGameObject->ptTexture  = texture_Load(TextureSheet, ptRenderer);
+    ptGameObject->ptTexture  = texture_Load(TextureSheet);
     if (ptGameObject->ptTexture == NULL){
         printf("Não foi possivel criar a textura!\n");
         return RET_SDL_ERROR;
@@ -58,13 +56,13 @@ e_Ret object_Update(t_GameObject * ptGameObject)
     ptGameObject->iPosX++;
     ptGameObject->iPosY++;
 
-    ptGameObject->tSourceRect.h = 32;
-    ptGameObject->tSourceRect.w = 32;
+    ptGameObject->tSourceRect.h = 64;
+    ptGameObject->tSourceRect.w = 64;
     ptGameObject->tSourceRect.x = 0;
     ptGameObject->tSourceRect.y = 0;
     
-    ptGameObject->tDestRect.h = ptGameObject->tSourceRect.h * 2;
-    ptGameObject->tDestRect.w = ptGameObject->tSourceRect.w * 2;
+    ptGameObject->tDestRect.h = ptGameObject->tSourceRect.h;
+    ptGameObject->tDestRect.w = ptGameObject->tSourceRect.w;
     ptGameObject->tDestRect.x = ptGameObject->iPosX;
     ptGameObject->tDestRect.y = ptGameObject->iPosY;
 
@@ -73,7 +71,7 @@ e_Ret object_Update(t_GameObject * ptGameObject)
 
 e_Ret object_Render(t_GameObject * ptGameObject)
 {
-    e_Ret eRet = SDL_RenderCopy(ptGameObject->ptRenderer, 
+    e_Ret eRet = SDL_RenderCopy(gptRenderer, 
                                 ptGameObject->ptTexture, 
                                 &ptGameObject->tSourceRect, 
                                 &ptGameObject->tDestRect);
