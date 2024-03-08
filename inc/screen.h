@@ -6,18 +6,31 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_test_font.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "texture.h"
+#include "object.h"
 #include "level_1.h"
 
 /*****************************************************************************
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
+#define FPS         60
+#define FRAME_DELAY 1000 / FPS
+
+#define TEXTURE_PLAYER  "player.png"
+#define TEXTURE_WOLF    "wolf.png"
+#define TEXTURE_TROLL   "troll.png"
+#define TEXTURE_WARRIOR "warrior.png"
+
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
+
+extern SDL_Renderer *gptRenderer;
 
 /*****************************************************************************
  * Public Function Prototypes

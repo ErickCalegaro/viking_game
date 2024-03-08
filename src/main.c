@@ -72,7 +72,7 @@ static e_Ret main_Init(void)
         return eRet;
     }
     
-    eRet = screen_CreateWindow(TRUE);
+    eRet = screen_CreateWindow(FALSE);
     if (eRet){
         printf("Janela principal nao pode ser criada!\n");
         return eRet;
@@ -144,6 +144,7 @@ static e_State main_GetState(void)
 /*****************************************************************************
  * Public Function Definitions
  *****************************************************************************/
+
 int main(void)
 {
     e_Ret eRet = RET_OK;

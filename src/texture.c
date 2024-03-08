@@ -1,5 +1,5 @@
 /**
- * \file    level_1.c
+ * \file    texture.c
  * \version 0.0.1
  * \date    08/03/2024
  * \author  Erick Calegaro
@@ -22,6 +22,7 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
+
 /*****************************************************************************
  * Private Function Prototypes
  *****************************************************************************/
@@ -36,32 +37,21 @@
  * Public Function Definitions
  *****************************************************************************/
 
-e_Ret level_1_Loop(e_State * eNextState)
+SDL_Texture * texture_Load(const char * psTexturePath)
 {
-    eNextState = eNextState; //Unref parameter
-    
-    e_Ret   eRet         = RET_OK;
-    Uint32  uiFrameStart = 0;
-    int     iFrameTime   = 0;
+    SDL_Surface *tTempSurface = IMG_Load(psTexturePath);
+    if (tTempSurface == NULL) {
+        printf("Não foi possivel carregar a imagem [%s]! SDL_Error: %s\n", psTexturePath, SDL_GetError());
+        return NULL;
+    }
 
-    do{
-        uiFrameStart = SDL_GetTicks();
+    SDL_Texture *tLocalTexture = SDL_CreateTextureFromSurface(gptRenderer, tTempSurface);
+    SDL_FreeSurface(tTempSurface);
+    if (tLocalTexture == NULL) {
+        printf("Não foi possivel criar a textura para [%s]! SDL_Error: %s\n", psTexturePath, SDL_GetError());
+        return NULL;
+    }
 
-        control_HandleEvents();
-        screen_Update();
-        eRet = screen_Render();
-        if (eRet){
-            printf("Nao foi possivel renderizar a tela!\n");
-            break;
-        }
-        
-        iFrameTime = SDL_GetTicks() - uiFrameStart;
-
-        if (FRAME_DELAY > iFrameTime){ //Trava de FPS
-            SDL_Delay(FRAME_DELAY - iFrameTime);
-        }
-        
-    } while (control_GetRunning());
-
-    return RET_OK;
+    return tLocalTexture;
 }
+

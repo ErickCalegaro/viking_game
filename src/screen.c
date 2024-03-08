@@ -18,15 +18,20 @@
  *****************************************************************************/
 
 #define SCREEN_WIDTH  800
-#define SCREEN_HEIGHT 600
+#define SCREEN_HEIGHT 640
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
-static SDL_Renderer    *tRenderer;
-static SDL_Window      *tWindow;
 static int              giCount = 0;
+static SDL_Window      *tWindow;
+
+SDL_Renderer *gptRenderer;
+
+// Caracteristicas do personagem
+t_GameObject tPlayerObject;
+t_GameObject tEnemyObject;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -40,6 +45,22 @@ static int              giCount = 0;
  */
 static e_Ret screen_DrawBackground(void); 
 
+/**
+ * \brief Cria a textura do personagem principal.
+ * \param void
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+static e_Ret screen_CreatePlayer(void);
+
+/**
+ * \brief Cria a textura do inimigo da fase.
+ * \param void // !TODO: Passar e_State como parametro para alterar o asset
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+static e_Ret screen_CreateEnemy(void);
+
 /*****************************************************************************
  * Private Function Definitions
  *****************************************************************************/
@@ -47,7 +68,7 @@ static e_Ret screen_DrawBackground(void);
 static e_Ret screen_DrawBackground(void)
 {
     e_Ret eRet = RET_OK;
-    eRet = SDL_SetRenderDrawColor(tRenderer, 0, 255, 0, 255);
+    eRet = SDL_SetRenderDrawColor(gptRenderer, 0, 255, 0, 255);
     if (eRet < 0) {
         printf("Nao foi possivel definir a cor de fundo! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
@@ -59,8 +80,35 @@ static e_Ret screen_DrawBackground(void)
         return RET_SDL_ERROR;
     }
 
-    return eRet;
+    return RET_OK;
 }
+
+static e_Ret screen_CreatePlayer(void)
+{
+    e_Ret eRet = RET_OK;
+    memset(&tPlayerObject, 0x00, sizeof(tPlayerObject));
+    eRet = object_Create(&tPlayerObject, TEXTURE_PLAYER, 0, 0);
+    if (eRet){
+        printf("Nao foi possivel criar o objeto Player!\n");
+        return RET_INIT_ERROR;
+    }
+    
+    return RET_OK;
+}
+
+static e_Ret screen_CreateEnemy(void)
+{
+    e_Ret eRet = RET_OK;
+    memset(&tEnemyObject, 0x00, sizeof(tEnemyObject));
+    eRet = object_Create(&tEnemyObject, TEXTURE_WOLF, 50, 50);
+    if (eRet){
+        printf("Nao foi possivel criar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
+    }
+    
+    return RET_OK;
+}
+
 
 /*****************************************************************************
  * Public Function Definitions
@@ -96,14 +144,24 @@ e_Ret screen_CreateWindow(bool bFullscreen)
         return RET_INIT_ERROR;
     }
     
-    tRenderer = SDL_CreateRenderer(tWindow, -1, 0);
-    if (tRenderer == NULL) {
+    gptRenderer = SDL_CreateRenderer(tWindow, -1, 0);
+    if (gptRenderer == NULL) {
         printf("Renderizador nao pode ser criado! SDL_Error: %s\n", SDL_GetError());
         return RET_INIT_ERROR;
     }
 
     if (screen_DrawBackground()) {
         printf("Nao foi possivel desenhar o BG!\n");
+        return RET_INIT_ERROR;
+    }
+
+    if (screen_CreatePlayer()){
+        printf("Textura do jogador nao pode ser criada!\n");
+        return RET_INIT_ERROR;
+    }
+
+    if (screen_CreateEnemy()){
+        printf("Textura do inimigo nao pode ser criada!\n");
         return RET_INIT_ERROR;
     }
 
@@ -114,8 +172,23 @@ e_Ret screen_Update(void)
 {
     e_Ret eRet = RET_OK;
     giCount++;
-    printf("giCount = [%d]\n", giCount);
+    // tSourceRect
 
+    //Posição do jogador
+    eRet = object_Update(&tPlayerObject);
+    if (eRet){
+        printf("Nao foi possivel atualizar o objeto Player!\n");
+        return RET_INIT_ERROR;
+    }
+
+    //Posição do inimigo
+    eRet = object_Update(&tEnemyObject);
+    if (eRet){
+        printf("Nao foi possivel atualizar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
+    }
+
+    printf("giCount = [%d]\n", giCount);
     return eRet;
 }
 
@@ -123,22 +196,38 @@ e_Ret screen_Render(void)
 {
     e_Ret eRet = RET_OK;
 
-    eRet = SDL_RenderClear(tRenderer);
+    //Limpa a tela
+    eRet = SDL_RenderClear(gptRenderer);
     if (eRet < 0) {
         printf("Nao foi possivel limpar o render! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
 
-    SDL_RenderPresent(tRenderer); 
+    //Renderiza o jogador
+    eRet = object_Render(&tPlayerObject);
+    if (eRet){
+        printf("Nao foi possivel renderizar o objeto Player!\n");
+        return RET_INIT_ERROR;
+    }
 
-    return eRet;
+    //Renderiza o inimigo
+    eRet = object_Render(&tEnemyObject);
+    if (eRet){
+        printf("Nao foi possivel renderizar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
+    }
+
+    //Atualiza o Render
+    SDL_RenderPresent(gptRenderer); 
+
+    return RET_OK;
 }
 
 e_Ret screen_DestroySDL(void)
 { 
     SDL_DestroyWindow(tWindow);
 
-    SDL_DestroyRenderer(tRenderer);
+    SDL_DestroyRenderer(gptRenderer);
 
     SDL_Quit();
 
