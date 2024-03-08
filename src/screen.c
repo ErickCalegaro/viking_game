@@ -118,16 +118,9 @@ e_Ret screen_CreateWindow(bool bFullscreen)
 
 e_Ret screen_CreatePlayer(void)
 {
-    SDL_Surface *tTempSurface = IMG_Load("player.png");
-    if (tTempSurface == NULL) {
-        printf("Não foi possivel carregar a imagem! SDL_Error: %s\n", SDL_GetError());
-        return RET_SDL_ERROR;
-    }
-
-    tPlayerTexture = SDL_CreateTextureFromSurface(tRenderer, tTempSurface);
-    SDL_FreeSurface(tTempSurface);
-    if (tPlayerTexture == NULL) {
-        printf("Não foi possivel criar a textura! SDL_Error: %s\n", SDL_GetError());
+    tPlayerTexture = texture_Load(TEXTURE_PLAYER, tRenderer);
+    if (tPlayerTexture == NULL){
+        printf("Não foi possivel criar a textura para do player!\n");
         return RET_SDL_ERROR;
     }
 

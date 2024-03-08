@@ -10,6 +10,7 @@
 #include <SDL2/SDL_test_font.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "texture.h"
 #include "level_1.h"
 
 /*****************************************************************************
@@ -18,6 +19,8 @@
 
 #define FPS         60
 #define FRAME_DELAY 1000 / FPS
+
+#define TEXTURE_PLAYER "player.png"
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
