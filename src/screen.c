@@ -1,36 +1,61 @@
-#include <windows.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/**
+ * \file    screen.c
+ * \version 0.0.1
+ * \date    07/03/2024
+ * \author  Erick Calegaro
+ */
+
+/*****************************************************************************
+ * Includes
+ *****************************************************************************/
+#include "main.h"
 #include "screen.h"
 
+/*****************************************************************************
+ * Preprocessor Macros and Defines
+ *****************************************************************************/
+
+/*****************************************************************************
+ * Typedefs and Variable Definitions
+ *****************************************************************************/
 const int SCREEN_WIDTH  = 1200;
 const int SCREEN_HEIGHT = 600;
 
-SDL_Renderer * renderer;
-SDL_Window   * window;
+SDL_Renderer * tRenderer;
+SDL_Window   * tWindow;
 
-int screen_CreateWindow(void) 
+/*****************************************************************************
+ * Private Function Definitions
+ *****************************************************************************/
+
+/*****************************************************************************
+ * Public Function Definitions
+ *****************************************************************************/
+e_Ret screen_CreateWindow(void) 
 {
-    TTF_Init();
-    char title[] = APP_NAME " - " VERSION;
+    char sTitle[] = APP_NAME " - " VERSION;
+    
+    if (TTF_Init() < 0) {
+        printf("Fontes nao puderam ser inicializadas! TTF_Error: %s\n", TTF_GetError());
+        return RET_INIT_ERROR;
+    }
     
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        return 1;
+        printf("SDL nao pode ser inicializado! SDL_Error: %s\n", SDL_GetError());
+        return RET_INIT_ERROR;
     }
 
-    window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (window == NULL) {
-        printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 2;
+    tWindow = SDL_CreateWindow(sTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (tWindow == NULL) {
+        printf("Janela nao pode ser criada! SDL_Error: %s\n", SDL_GetError());
+        return RET_INIT_ERROR;
     }
     
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == NULL) {
-        printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 3;
+    tRenderer = SDL_CreateRenderer(tWindow, -1, SDL_RENDERER_ACCELERATED);
+    if (tRenderer == NULL) {
+        printf("Renderizador nao pode ser criado! SDL_Error: %s\n", SDL_GetError());
+        return RET_INIT_ERROR;
     }
 
-    return 0;
+    return RET_OK;
 }
