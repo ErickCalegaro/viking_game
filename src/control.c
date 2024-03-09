@@ -63,3 +63,40 @@ e_Ret control_HandleEvents(void)
 
     return RET_OK;
 }
+
+//Temp test only
+e_Ret control_TestMove(void)
+{
+    e_Ret eRet = RET_OK;
+    t_Position tTempPosition;
+
+    //Posição do jogador
+    tTempPosition.iEntityID = hPlayerHandle;
+    eRet = entity_CheckPosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel obter as posicoes da entidade!\n");
+        return RET_POS_ERROR;
+    }
+    tTempPosition.iPosX++;
+    eRet = entity_UpdatePosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel definir novas posicoes para entidade!\n");
+        return RET_POS_ERROR;
+    }
+
+    //Posição do inimigo
+    tTempPosition.iEntityID = hEnemyHandle;
+    eRet = entity_CheckPosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel obter as posicoes da entidade!\n");
+        return RET_POS_ERROR;
+    }
+    tTempPosition.iPosY++;
+    eRet = entity_UpdatePosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel definir novas posicoes para entidade!\n");
+        return RET_POS_ERROR;
+    }
+
+    return eRet;
+}

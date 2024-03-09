@@ -31,6 +31,8 @@ SDL_Renderer *gptRenderer;
 
 // Caracteristicas do personagem
 t_GameObject tPlayerObject;
+
+// Caracteristicas do inimigo
 t_GameObject tEnemyObject;
 
 /*****************************************************************************
@@ -92,6 +94,12 @@ static e_Ret screen_CreatePlayer(void)
         printf("Nao foi possivel criar o objeto Player!\n");
         return RET_INIT_ERROR;
     }
+
+    hPlayerHandle = entity_Create();
+    if (hPlayerHandle < RET_OK){
+        printf("Nao foi possivel criar a entidade Player!\n");
+        return RET_INIT_ERROR;
+    }
     
     return RET_OK;
 }
@@ -103,6 +111,12 @@ static e_Ret screen_CreateEnemy(void)
     eRet = object_Create(&tEnemyObject, TEXTURE_WOLF, 50, 50);
     if (eRet){
         printf("Nao foi possivel criar o objeto Enemy!\n");
+        return RET_INIT_ERROR;
+    }
+
+    hEnemyHandle = entity_Create();
+    if (hEnemyHandle < RET_OK){
+        printf("Nao foi possivel criar a entidade Enemy!\n");
         return RET_INIT_ERROR;
     }
     
@@ -171,21 +185,33 @@ e_Ret screen_CreateWindow(bool bFullscreen)
 e_Ret screen_Update(void)
 {
     e_Ret eRet = RET_OK;
+    t_Position tTempPosition;
     giCount++;
-    // tSourceRect
 
     //Posição do jogador
-    eRet = object_Update(&tPlayerObject);
+    tTempPosition.iEntityID = hPlayerHandle;
+    eRet = entity_CheckPosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel obter as posicoes da entidade!\n");
+        return RET_POS_ERROR;
+    }
+    eRet = object_Update(&tPlayerObject, &tTempPosition);
     if (eRet){
         printf("Nao foi possivel atualizar o objeto Player!\n");
-        return RET_INIT_ERROR;
+        return RET_OBJ_ERROR;
     }
 
     //Posição do inimigo
-    eRet = object_Update(&tEnemyObject);
+    tTempPosition.iEntityID = hEnemyHandle;
+    eRet = entity_CheckPosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel obter as posicoes da entidade!\n");
+        return RET_POS_ERROR;
+    }
+    eRet = object_Update(&tEnemyObject, &tTempPosition);
     if (eRet){
         printf("Nao foi possivel atualizar o objeto Enemy!\n");
-        return RET_INIT_ERROR;
+        return RET_OBJ_ERROR;
     }
 
     printf("giCount = [%d]\n", giCount);

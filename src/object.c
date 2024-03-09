@@ -51,10 +51,10 @@ e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, int i
     return RET_OK;
 }
 
-e_Ret object_Update(t_GameObject * ptGameObject)
+e_Ret object_Update(t_GameObject * ptGameObject, t_Position * tPosition)
 {
-    ptGameObject->iPosX++;
-    ptGameObject->iPosY++;
+    ptGameObject->iPosX = tPosition->iPosX;
+    ptGameObject->iPosY = tPosition->iPosY;
 
     ptGameObject->tSourceRect.h = 64;
     ptGameObject->tSourceRect.w = 64;

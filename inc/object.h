@@ -4,6 +4,8 @@
  * Includes
  *****************************************************************************/
 
+#include "entity.h"
+
 /*****************************************************************************
  * Preprocessor Macros and Defines
  *****************************************************************************/
@@ -38,9 +40,10 @@ e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, int i
 /**
  * \brief Atualiza o objeto de acordo com a referencia de sua estrutura.
  * \param ptGameObject Referencia para struct do objeto que será atualizado.
+ * \param tPosition Referencia para struct com as informações de localização do objeto.
  * \returns Retorna sempre RET_OK; 
  */
-e_Ret object_Update(t_GameObject * ptGameObject);
+e_Ret object_Update(t_GameObject * ptGameObject, t_Position * tPosition);
 
 /**
  * \brief Renderiza o objeto de acordo com a referencia de sua estrutura.

@@ -98,6 +98,11 @@ e_Ret level_1_Loop(e_State * eNextState)
         uiFrameStart = SDL_GetTicks();
 
         control_HandleEvents();
+        eRet = control_TestMove();
+        if (eRet){
+            printf("Nao foi possivel manipular as posicoes!\n");
+            break;
+        }
         screen_Update();
         eRet = screen_Render();
         if (eRet){
