@@ -49,6 +49,12 @@ static int giArrayMapLevel1[20][25] = {
  * Private Function Prototypes
  *****************************************************************************/
 
+/**
+ * \brief Cria e inicializa o mapa que será utilizado na fase 1.
+ * \param void
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_MAP_ERROR - Caso falhe na criação do mapa;  
+ */
 static e_Ret level_1_Init(void);
 
 /*****************************************************************************

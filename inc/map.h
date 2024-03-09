@@ -38,10 +38,29 @@ typedef enum e_TileType_tag {
  * Public Function Prototypes
  *****************************************************************************/
 
+/**
+ * \brief Carrega as texturas para os blocos de acordo com a fase.
+ * \param eState Identifica qual a fase atual do jogo.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe no carregamento da textura;
+ *          RET_INV_PARAM - Caso receba uma fase inválida;
+ */
 e_Ret map_Create(e_State eState);
 
+/**
+ * \brief Copia para a memoria o molde de level design passado no parametro.
+ * \param iArrayMap Matriz de inteiros do tipo e_TileType.
+ * \returns Retorna sempre RET_OK; 
+ */
+e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS]);
+
+/**
+ * \brief Desenha na tela o level design definido em map_Load.
+ * \param void
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe ao desenhar algum bloco;
+ */
 e_Ret map_Draw(void);
 
-e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS]);
 
 #endif

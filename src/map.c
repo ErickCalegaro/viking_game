@@ -69,7 +69,7 @@ e_Ret map_Create(e_State eState)
             break;
         default:
             printf("Nao existem texturas para o estado [%d]!\n", eState);
-            return RET_MAP_ERROR;
+            return RET_INV_PARAM;
     }
 
     if (gptTextureDirt == NULL || gptTextureGrass == NULL){
@@ -82,6 +82,17 @@ e_Ret map_Create(e_State eState)
     gtSourceRect.h = gtDestRect.h   = 32;
     gtSourceRect.w = gtDestRect.w   = 32;
 
+    return RET_OK;
+}
+
+e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS])
+{
+    for (size_t row = 0; row < NUM_ROWS; row++){
+        for (size_t column = 0; column < NUM_COLUMNS; column++){
+            giArrayMap[row][column] = iArrayMap[row][column];
+        }
+    }
+    
     return RET_OK;
 }
 
@@ -120,16 +131,5 @@ e_Ret map_Draw(void)
         }
     }
 
-    return RET_OK;
-}
-
-e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS])
-{
-    for (size_t row = 0; row < NUM_ROWS; row++){
-        for (size_t column = 0; column < NUM_COLUMNS; column++){
-            giArrayMap[row][column] = iArrayMap[row][column];
-        }
-    }
-    
     return RET_OK;
 }
