@@ -39,20 +39,20 @@
 
 SDL_Texture * texture_Load(const char * psTexturePath)
 {
-    SDL_Surface *tTempSurface = IMG_Load(psTexturePath);
-    if (tTempSurface == NULL) {
+    SDL_Surface *ptTempSurface = IMG_Load(psTexturePath);
+    if (ptTempSurface == NULL) {
         printf("Não foi possivel carregar a imagem [%s]! SDL_Error: %s\n", psTexturePath, SDL_GetError());
         return NULL;
     }
 
-    SDL_Texture *tLocalTexture = SDL_CreateTextureFromSurface(gptRenderer, tTempSurface);
-    SDL_FreeSurface(tTempSurface);
-    if (tLocalTexture == NULL) {
+    SDL_Texture *ptLocalTexture = SDL_CreateTextureFromSurface(gptRenderer, ptTempSurface);
+    SDL_FreeSurface(ptTempSurface);
+    if (ptLocalTexture == NULL) {
         printf("Não foi possivel criar a textura para [%s]! SDL_Error: %s\n", psTexturePath, SDL_GetError());
         return NULL;
     }
 
-    return tLocalTexture;
+    return ptLocalTexture;
 }
 
 e_Ret texture_Draw(SDL_Texture *ptTexture, SDL_Rect tSourceRect, SDL_Rect tDestRect)

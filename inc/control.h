@@ -3,7 +3,7 @@
 /*****************************************************************************
  * Includes
  *****************************************************************************/
-
+#include "entity.h"
 
 /*****************************************************************************
  * Preprocessor Macros and Defines
@@ -21,7 +21,7 @@
 
 /**
  * \brief Setter de execução do jogo
- * \param eState Estado que deseja definir a execução
+ * \param bIsRunning Estado que deseja definir a execução
  * \returns void
  */
 void control_SetRunning(bool bIsRunning);
@@ -41,5 +41,8 @@ bool control_GetRunning(void);
  *          RET_ABORT - Caso janela seja fechada;  
  */
 e_Ret control_HandleEvents(void); 
+
+//Test Only
+e_Ret control_TestMove(void);
 
 #endif

@@ -49,10 +49,10 @@ e_Ret map_Create(e_State eState);
 
 /**
  * \brief Copia para a memoria o molde de level design passado no parametro.
- * \param iArrayMap Matriz de inteiros do tipo e_TileType.
+ * \param aNewMap Matriz de inteiros do tipo e_TileType.
  * \returns Retorna sempre RET_OK; 
  */
-e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS]);
+e_Ret map_Load(int aNewMap[NUM_ROWS][NUM_COLUMNS]);
 
 /**
  * \brief Desenha na tela o level design definido em map_Load.

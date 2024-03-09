@@ -26,7 +26,7 @@ static SDL_Rect        gtSourceRect;
 static SDL_Rect        gtDestRect;
 static SDL_Texture    *gptTextureDirt;
 static SDL_Texture    *gptTextureGrass;
-static int             giArrayMap[NUM_ROWS][NUM_COLUMNS];
+static int             gaCurrMap[NUM_ROWS][NUM_COLUMNS];
 
 
 /*****************************************************************************
@@ -85,11 +85,11 @@ e_Ret map_Create(e_State eState)
     return RET_OK;
 }
 
-e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS])
+e_Ret map_Load(int aNewMap[NUM_ROWS][NUM_COLUMNS])
 {
-    for (size_t row = 0; row < NUM_ROWS; row++){
-        for (size_t column = 0; column < NUM_COLUMNS; column++){
-            giArrayMap[row][column] = iArrayMap[row][column];
+    for (int iRow = 0; iRow < NUM_ROWS; iRow++){
+        for (int iColumn = 0; iColumn < NUM_COLUMNS; iColumn++){
+            gaCurrMap[iRow][iColumn] = aNewMap[iRow][iColumn];
         }
     }
     
@@ -101,14 +101,14 @@ e_Ret map_Draw(void)
     e_TileType eTileType = 0;
     e_Ret eRet = RET_OK;
 
-    for (size_t row = 0; row < NUM_ROWS; row++)
+    for (int iRow = 0; iRow < NUM_ROWS; iRow++)
     {
-        for (size_t column = 0; column < NUM_COLUMNS; column++)
+        for (int iColumn = 0; iColumn < NUM_COLUMNS; iColumn++)
         {
-            eTileType = giArrayMap[row][column];
+            eTileType = gaCurrMap[iRow][iColumn];
 
-            gtDestRect.x = column * 32;
-            gtDestRect.y = row * 32;
+            gtDestRect.x = iColumn * 32;
+            gtDestRect.y = iRow * 32;
 
             switch (eTileType)
             {
@@ -125,7 +125,7 @@ e_Ret map_Draw(void)
             }
 
             if (eRet){
-                printf("Falha ao desenhar o bloco[%d][%d] do tipo [%d]!\n", column, row, eTileType);
+                printf("Falha ao desenhar o bloco[%d][%d] do tipo [%d]!\n", iColumn, iRow, eTileType);
                 return RET_SDL_ERROR;
             }
         }

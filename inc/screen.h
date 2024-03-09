@@ -20,8 +20,11 @@
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
-#define FPS         60
-#define FRAME_DELAY 1000 / FPS
+#define FPS             60
+#define FRAME_DELAY     1000 / FPS
+
+#define SCREEN_WIDTH    800
+#define SCREEN_HEIGHT   640
 
 #define TEXTURE_PLAYER  "player.png"
 #define TEXTURE_WOLF    "wolf.png"
@@ -60,7 +63,8 @@ e_Ret screen_CreateWindow(bool bFullscreen);
  * \brief Atualiza os componentes da tela.
  * \param void
  * \returns RET_OK - Caso sucesso; 
- *          RET_SDL_ERROR - Caso falhe; 
+ *          RET_POS_ERROR - Caso falhe na obtenção da posição da entidade; 
+ *          RET_OBJ_ERROR - Caso falhe na atualização do objeto na tela;
  */
 e_Ret screen_Update(void);
 
