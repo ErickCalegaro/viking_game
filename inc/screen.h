@@ -60,7 +60,8 @@ e_Ret screen_CreateWindow(bool bFullscreen);
  * \brief Atualiza os componentes da tela.
  * \param void
  * \returns RET_OK - Caso sucesso; 
- *          RET_SDL_ERROR - Caso falhe; 
+ *          RET_POS_ERROR - Caso falhe na obtenção da posição da entidade; 
+ *          RET_OBJ_ERROR - Caso falhe na atualização do objeto na tela;
  */
 e_Ret screen_Update(void);
 

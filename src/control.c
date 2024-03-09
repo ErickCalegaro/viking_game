@@ -56,6 +56,7 @@ e_Ret control_HandleEvents(void)
     {
         case SDL_QUIT:
             control_SetRunning(FALSE);
+            printf("Encerrando o jogo!\n");
             return RET_ABORT;
         default:
             break;
@@ -98,5 +99,5 @@ e_Ret control_TestMove(void)
         return RET_POS_ERROR;
     }
 
-    return eRet;
+    return RET_OK;
 }

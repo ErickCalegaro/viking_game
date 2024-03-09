@@ -34,7 +34,21 @@ EntityHandle hEnemyHandle;
  * Private Function Prototypes
  *****************************************************************************/
 
+/**
+ * \brief Retorna um novo identificador incremental unico.
+ * \param void
+ * \returns Retorna um novo ID para ser utilizado em entity_Create; 
+ */
 static int entity_GetNewID(void);
+
+/**
+ * \brief Obtem o index do componente de acordo com o handle informado.
+ * \param hHandle Handle(ou ID primario) da entidade, que foi retornado por entity_Create;
+ * \returns Caso sucesso, retorna o index fisico do componente(tHealthComponents ou tPositionComponents) em gtComponents; 
+ *          Caso o handle seja inválido retorna -1;
+ *          Caso não encontre o id com o handle informado retorna -2;
+ */
+static int entity_GetIndexByHandle(EntityHandle hHandle);
 
 /*****************************************************************************
  * Private Function Definitions
@@ -47,8 +61,10 @@ static int entity_GetNewID(void)
 
 static int entity_GetIndexByHandle(EntityHandle hHandle)
 {
-    if (hHandle < 0)
+    if (hHandle < 0){
+        printf("Handle invlido informado!\n");
         return -1;
+    }
     
     for (int i = 0; i < MAX_COMPONENTS; i++){
         if (gtComponents.tHealthComponents[i].iEntityID == hHandle){
@@ -56,6 +72,7 @@ static int entity_GetIndexByHandle(EntityHandle hHandle)
         }
     }
 
+    printf("Nao foi possivel encontrar o id do handle informado!\n");
     return -2;
 }
 
@@ -68,6 +85,7 @@ EntityHandle entity_Create(void)
     int iLocalID = entity_GetNewID();
     // int iLocalIndex = entity_GetFreeIndex(); // !TODO: implementar isto para ser usado no [] 
     if(iLocalID > MAX_COMPONENTS){
+        printf("Quantidade maxima de entidades excedido!\n");
         return -1;
     }
 
@@ -83,6 +101,7 @@ e_Ret entity_UpdateHealth(t_Health * tHealth)
 {
     int iEntityIndex = entity_GetIndexByHandle(tHealth->iEntityID);
     if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
@@ -96,6 +115,7 @@ e_Ret entity_UpdatePosition(t_Position * tPosition)
 {
     int iEntityIndex = entity_GetIndexByHandle(tPosition->iEntityID);
     if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
@@ -109,6 +129,7 @@ e_Ret entity_CheckHealth(t_Health * tHealth)
 {
     int iEntityIndex = entity_GetIndexByHandle(tHealth->iEntityID);
     if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
@@ -122,6 +143,7 @@ e_Ret entity_CheckPosition(t_Position * tPosition)
 {
     int iEntityIndex = entity_GetIndexByHandle(tPosition->iEntityID);
     if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
