@@ -1,53 +1,47 @@
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __MAP_H__
+#define __MAP_H__
 /*****************************************************************************
  * Includes
  *****************************************************************************/
-#include <windows.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+
 
 /*****************************************************************************
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
+#define NUM_ROWS    20
+#define NUM_COLUMNS 25
+
+#define TILE_DIRT_L1    "level1/dirt.png"
+#define TILE_GRASS_L1   "level1/grass.png"
+#define TILE_DIRT_L2    "level2/dirt.png"
+#define TILE_GRASS_L2   "level2/grass.png"
+#define TILE_DIRT_L3    "level3/dirt.png"
+#define TILE_GRASS_L3   "level3/grass.png"
+#define TILE_DIRT_L4    "level4/dirt.png"
+#define TILE_GRASS_L4   "level4/grass.png"
+#define TILE_DIRT_L5    "level5/dirt.png"
+#define TILE_GRASS_L5   "level5/grass.png"
+
+
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
-typedef enum e_Ret_tag {
-  RET_OK = 0,
-  RET_ABORT,
-  RET_INV_PARAM,
-  RET_INIT_ERROR,
-  RET_SDL_ERROR,
-  RET_MAP_ERROR,
-} e_Ret;
 
-typedef enum e_State_tag {
-    STATE_MENU = 0,
-    STATE_PAUSE,
-    STATE_DEATH,
-    STATE_TRAVEL,
-    STATE_LEVEL_1,
-    STATE_LEVEL_2,
-    STATE_LEVEL_3,
-    STATE_LEVEL_4,
-    STATE_LEVEL_5,
-    STATE_GAMEOVER,
-    STATE_WIN,
-} e_State;
+typedef enum e_TileType_tag {
+    TILE_AIR = 0,
+    TILE_DIRT,
+    TILE_GRASS,
+} e_TileType;
 
 /*****************************************************************************
  * Public Function Prototypes
  *****************************************************************************/
 
-/**
- * \brief Função principal utilizada pelo windows.
- * \param void
- * \returns Sempre retornará RET_OK 
- */
-int main(void);
+e_Ret map_Create(e_State eState);
+
+e_Ret map_Draw(void);
+
+e_Ret map_Load(int iArrayMap[NUM_ROWS][NUM_COLUMNS]);
 
 #endif
