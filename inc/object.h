@@ -45,7 +45,8 @@ e_Ret object_Update(t_GameObject * ptGameObject);
 /**
  * \brief Renderiza o objeto de acordo com a referencia de sua estrutura.
  * \param ptGameObject Referencia para struct do objeto que será renderizado.
- * \returns Retorna sempre RET_OK; 
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
  */
 e_Ret object_Render(t_GameObject * ptGameObject);
 

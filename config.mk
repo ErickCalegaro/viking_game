@@ -1,2 +1,2 @@
 APP_NAME = VikingGame
-APP_VERSION = 0.0.03
+APP_VERSION = 0.0.04

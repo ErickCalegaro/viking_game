@@ -22,6 +22,7 @@ typedef enum e_Ret_tag {
   RET_INV_PARAM,
   RET_INIT_ERROR,
   RET_SDL_ERROR,
+  RET_MAP_ERROR,
 } e_Ret;
 
 typedef enum e_State_tag {

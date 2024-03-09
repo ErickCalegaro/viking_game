@@ -68,7 +68,7 @@ static e_Ret screen_CreateEnemy(void);
 static e_Ret screen_DrawBackground(void)
 {
     e_Ret eRet = RET_OK;
-    eRet = SDL_SetRenderDrawColor(gptRenderer, 0, 255, 0, 255);
+    eRet = SDL_SetRenderDrawColor(gptRenderer, 255, 120, 97, 255);
     if (eRet < 0) {
         printf("Nao foi possivel definir a cor de fundo! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
@@ -201,6 +201,13 @@ e_Ret screen_Render(void)
     if (eRet < 0) {
         printf("Nao foi possivel limpar o render! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
+    }
+
+    //Renderiza o Mapa
+    eRet = map_Draw();
+    if (eRet){
+        printf("Nao foi possivel desenhar o mapa!\n");
+        return RET_INIT_ERROR;
     }
 
     //Renderiza o jogador

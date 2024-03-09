@@ -50,7 +50,7 @@ all: $(BUILD_DIR)/${PROJECT}
 	@${ECHO} "|"
 	@${ECHO} "+---------------------------------------------------"
 	@$(MKDIR) $(OUTPUT_DIR)
-	@$(CP) $(RES_DIR)/* $(OUTPUT_DIR)
+	@$(CP) -r $(RES_DIR)/* $(OUTPUT_DIR)
 	@$(MV) $(BUILD_DIR)/$(PROJECT) $(OUTPUT_DIR)/$(PROJECT)_$(APP_VERSION)
 
 $(BUILD_DIR)/${PROJECT}: $(OBJ_FILES) | $(BUILD_DIR)
