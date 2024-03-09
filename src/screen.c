@@ -17,23 +17,20 @@
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
-#define SCREEN_WIDTH  800
-#define SCREEN_HEIGHT 640
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
 static int              giCount = 0;
-static SDL_Window      *tWindow;
-
-SDL_Renderer *gptRenderer;
+static SDL_Window      *gptWindow;
+SDL_Renderer           *gptRenderer;
 
 // Caracteristicas do personagem
-t_GameObject tPlayerObject;
+t_GameObject gtPlayerObject;
 
 // Caracteristicas do inimigo
-t_GameObject tEnemyObject;
+t_GameObject gtEnemyObject;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -88,17 +85,29 @@ static e_Ret screen_DrawBackground(void)
 static e_Ret screen_CreatePlayer(void)
 {
     e_Ret eRet = RET_OK;
-    memset(&tPlayerObject, 0x00, sizeof(tPlayerObject));
-    eRet = object_Create(&tPlayerObject, TEXTURE_PLAYER, 0, 0);
+    t_Position tTempPosition;
+    
+    memset(&gtPlayerObject, 0x00, sizeof(gtPlayerObject));
+
+    eRet = object_Create(&gtPlayerObject, TEXTURE_PLAYER, 0, 0);
     if (eRet){
         printf("Nao foi possivel criar o objeto Player!\n");
         return RET_INIT_ERROR;
     }
 
-    hPlayerHandle = entity_Create();
-    if (hPlayerHandle < RET_OK){
+    ghPlayerHandle = entity_Create();
+    if (ghPlayerHandle < RET_OK){
         printf("Nao foi possivel criar a entidade Player!\n");
         return RET_INIT_ERROR;
+    }
+
+    tTempPosition.hEntityID = ghPlayerHandle;
+    tTempPosition.iPosX     = 0;
+    tTempPosition.iPosY     = 0;
+    eRet = entity_UpdatePosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
+        return RET_POS_ERROR;
     }
     
     return RET_OK;
@@ -107,17 +116,29 @@ static e_Ret screen_CreatePlayer(void)
 static e_Ret screen_CreateEnemy(void)
 {
     e_Ret eRet = RET_OK;
-    memset(&tEnemyObject, 0x00, sizeof(tEnemyObject));
-    eRet = object_Create(&tEnemyObject, TEXTURE_WOLF, 50, 50);
+    t_Position tTempPosition;
+    
+    memset(&gtEnemyObject, 0x00, sizeof(gtEnemyObject));
+    
+    eRet = object_Create(&gtEnemyObject, TEXTURE_WOLF, 50, 50);
     if (eRet){
         printf("Nao foi possivel criar o objeto Enemy!\n");
         return RET_INIT_ERROR;
     }
 
-    hEnemyHandle = entity_Create();
-    if (hEnemyHandle < RET_OK){
+    ghEnemyHandle = entity_Create();
+    if (ghEnemyHandle < RET_OK){
         printf("Nao foi possivel criar a entidade Enemy!\n");
         return RET_INIT_ERROR;
+    }
+
+    tTempPosition.hEntityID = ghEnemyHandle;
+    tTempPosition.iPosX     = SCREEN_WIDTH;
+    tTempPosition.iPosY     = 0;
+    eRet = entity_UpdatePosition(&tTempPosition);
+    if (eRet){
+        printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
+        return RET_POS_ERROR;
     }
     
     return RET_OK;
@@ -152,13 +173,13 @@ e_Ret screen_CreateWindow(bool bFullscreen)
         iFlags = SDL_WINDOW_FULLSCREEN;
     }
 
-    tWindow = SDL_CreateWindow(sTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, iFlags);
-    if (tWindow == NULL) {
+    gptWindow = SDL_CreateWindow(sTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, iFlags);
+    if (gptWindow == NULL) {
         printf("Janela nao pode ser criada! SDL_Error: %s\n", SDL_GetError());
         return RET_INIT_ERROR;
     }
     
-    gptRenderer = SDL_CreateRenderer(tWindow, -1, 0);
+    gptRenderer = SDL_CreateRenderer(gptWindow, -1, 0);
     if (gptRenderer == NULL) {
         printf("Renderizador nao pode ser criado! SDL_Error: %s\n", SDL_GetError());
         return RET_INIT_ERROR;
@@ -189,26 +210,26 @@ e_Ret screen_Update(void)
     giCount++;
 
     //Posição do jogador
-    tTempPosition.iEntityID = hPlayerHandle;
+    tTempPosition.hEntityID = ghPlayerHandle;
     eRet = entity_CheckPosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
         return RET_POS_ERROR;
     }
-    eRet = object_Update(&tPlayerObject, &tTempPosition);
+    eRet = object_Update(&gtPlayerObject, &tTempPosition);
     if (eRet){
         printf("Nao foi possivel atualizar o objeto Player!\n");
         return RET_OBJ_ERROR;
     }
 
     //Posição do inimigo
-    tTempPosition.iEntityID = hEnemyHandle;
+    tTempPosition.hEntityID = ghEnemyHandle;
     eRet = entity_CheckPosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
         return RET_POS_ERROR;
     }
-    eRet = object_Update(&tEnemyObject, &tTempPosition);
+    eRet = object_Update(&gtEnemyObject, &tTempPosition);
     if (eRet){
         printf("Nao foi possivel atualizar o objeto Enemy!\n");
         return RET_OBJ_ERROR;
@@ -237,14 +258,14 @@ e_Ret screen_Render(void)
     }
 
     //Renderiza o jogador
-    eRet = object_Render(&tPlayerObject);
+    eRet = object_Render(&gtPlayerObject);
     if (eRet){
         printf("Nao foi possivel renderizar o objeto Player!\n");
         return RET_INIT_ERROR;
     }
 
     //Renderiza o inimigo
-    eRet = object_Render(&tEnemyObject);
+    eRet = object_Render(&gtEnemyObject);
     if (eRet){
         printf("Nao foi possivel renderizar o objeto Enemy!\n");
         return RET_INIT_ERROR;
@@ -258,7 +279,7 @@ e_Ret screen_Render(void)
 
 e_Ret screen_DestroySDL(void)
 { 
-    SDL_DestroyWindow(tWindow);
+    SDL_DestroyWindow(gptWindow);
 
     SDL_DestroyRenderer(gptRenderer);
 

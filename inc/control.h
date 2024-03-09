@@ -21,7 +21,7 @@
 
 /**
  * \brief Setter de execução do jogo
- * \param eState Estado que deseja definir a execução
+ * \param bIsRunning Estado que deseja definir a execução
  * \returns void
  */
 void control_SetRunning(bool bIsRunning);

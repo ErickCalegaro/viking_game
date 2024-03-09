@@ -20,8 +20,11 @@
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
-#define FPS         60
-#define FRAME_DELAY 1000 / FPS
+#define FPS             60
+#define FRAME_DELAY     1000 / FPS
+
+#define SCREEN_WIDTH    800
+#define SCREEN_HEIGHT   640
 
 #define TEXTURE_PLAYER  "player.png"
 #define TEXTURE_WOLF    "wolf.png"

@@ -21,10 +21,10 @@
 
 /**
  * \brief Loop de controle do nivel 1.
- * \param eNextState informa qual deve ser a proxima tela a ser exibida
+ * \param peNextState informa qual deve ser a proxima tela a ser exibida
  * \returns RET_OK - Caso sucesso; 
  *          RET_???_ERROR - Caso falhe;  
  */
-e_Ret level_1_Loop(e_State * eNextState);
+e_Ret level_1_Loop(e_State * peNextState);
 
 #endif

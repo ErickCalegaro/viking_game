@@ -25,10 +25,10 @@ static int giEntities = 0;
 static t_ComponentLists gtComponents;
 
 // Caracteristicas do personagem
-EntityHandle hPlayerHandle;
+EntityHandle ghPlayerHandle;
 
 // Caracteristicas do inimigo
-EntityHandle hEnemyHandle;
+EntityHandle ghEnemyHandle;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -44,7 +44,7 @@ static int entity_GetNewID(void);
 /**
  * \brief Obtem o index do componente de acordo com o handle informado.
  * \param hHandle Handle(ou ID primario) da entidade, que foi retornado por entity_Create;
- * \returns Caso sucesso, retorna o index fisico do componente(tHealthComponents ou tPositionComponents) em gtComponents; 
+ * \returns Caso sucesso, retorna o index fisico do componente(atHealthComponents ou atPositionComponents) em gtComponents; 
  *          Caso o handle seja inválido retorna -1;
  *          Caso não encontre o id com o handle informado retorna -2;
  */
@@ -67,7 +67,7 @@ static int entity_GetIndexByHandle(EntityHandle hHandle)
     }
     
     for (int i = 0; i < MAX_COMPONENTS; i++){
-        if (gtComponents.tHealthComponents[i].iEntityID == hHandle){
+        if (gtComponents.atHealthComponents[i].hEntityID == hHandle){
             return i;
         }
     }
@@ -89,66 +89,66 @@ EntityHandle entity_Create(void)
         return -1;
     }
 
-    gtComponents.tHealthComponents[iLocalID].iEntityID = iLocalID; //[iLocalID] se tornara um problema
-    gtComponents.tPositionComponents[iLocalID].iEntityID = iLocalID;
+    gtComponents.atHealthComponents[iLocalID].hEntityID = iLocalID; //[iLocalID] se tornara um problema
+    gtComponents.atPositionComponents[iLocalID].hEntityID = iLocalID;
     gtComponents.iTotalHealthComponents++;
     gtComponents.iTotalPositionComponents++;
 
     return iLocalID;
 }
 
-e_Ret entity_UpdateHealth(t_Health * tHealth)
+e_Ret entity_UpdateHealth(t_Health * ptHealth)
 {
-    int iEntityIndex = entity_GetIndexByHandle(tHealth->iEntityID);
+    int iEntityIndex = entity_GetIndexByHandle(ptHealth->hEntityID);
     if (iEntityIndex < RET_OK){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
-    gtComponents.tHealthComponents[iEntityIndex].iCurrHealth = tHealth->iCurrHealth;
-    gtComponents.tHealthComponents[iEntityIndex].iMaxHealth  = tHealth->iMaxHealth;
+    gtComponents.atHealthComponents[iEntityIndex].iCurrHealth = ptHealth->iCurrHealth;
+    gtComponents.atHealthComponents[iEntityIndex].iMaxHealth  = ptHealth->iMaxHealth;
 
     return RET_OK;
 }
 
-e_Ret entity_UpdatePosition(t_Position * tPosition)
+e_Ret entity_UpdatePosition(t_Position * ptPosition)
 {
-    int iEntityIndex = entity_GetIndexByHandle(tPosition->iEntityID);
+    int iEntityIndex = entity_GetIndexByHandle(ptPosition->hEntityID);
     if (iEntityIndex < RET_OK){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
-    gtComponents.tPositionComponents[iEntityIndex].iPosX = tPosition->iPosX;
-    gtComponents.tPositionComponents[iEntityIndex].iPosY = tPosition->iPosY;
+    gtComponents.atPositionComponents[iEntityIndex].iPosX = ptPosition->iPosX;
+    gtComponents.atPositionComponents[iEntityIndex].iPosY = ptPosition->iPosY;
 
     return RET_OK;
 }
 
-e_Ret entity_CheckHealth(t_Health * tHealth)
+e_Ret entity_CheckHealth(t_Health * ptHealth)
 {
-    int iEntityIndex = entity_GetIndexByHandle(tHealth->iEntityID);
+    int iEntityIndex = entity_GetIndexByHandle(ptHealth->hEntityID);
     if (iEntityIndex < RET_OK){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
-    tHealth->iCurrHealth = gtComponents.tHealthComponents[iEntityIndex].iCurrHealth;
-    tHealth->iMaxHealth = gtComponents.tHealthComponents[iEntityIndex].iMaxHealth;
+    ptHealth->iCurrHealth = gtComponents.atHealthComponents[iEntityIndex].iCurrHealth;
+    ptHealth->iMaxHealth = gtComponents.atHealthComponents[iEntityIndex].iMaxHealth;
 
     return RET_OK;
 }
 
-e_Ret entity_CheckPosition(t_Position * tPosition)
+e_Ret entity_CheckPosition(t_Position * ptPosition)
 {
-    int iEntityIndex = entity_GetIndexByHandle(tPosition->iEntityID);
+    int iEntityIndex = entity_GetIndexByHandle(ptPosition->hEntityID);
     if (iEntityIndex < RET_OK){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
-    tPosition->iPosX = gtComponents.tPositionComponents[iEntityIndex].iPosX;
-    tPosition->iPosY = gtComponents.tPositionComponents[iEntityIndex].iPosY;
+    ptPosition->iPosX = gtComponents.atPositionComponents[iEntityIndex].iPosX;
+    ptPosition->iPosY = gtComponents.atPositionComponents[iEntityIndex].iPosY;
 
     return RET_OK;
 }

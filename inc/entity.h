@@ -17,26 +17,26 @@
 typedef int EntityHandle;
 
 typedef struct {
-    EntityHandle    iEntityID;
+    EntityHandle    hEntityID;
     int             iPosX;
     int             iPosY;
 } t_Position;
 
 typedef struct {
-    EntityHandle    iEntityID;
+    EntityHandle    hEntityID;
     int             iCurrHealth;
     int             iMaxHealth;
 } t_Health;
 
 typedef struct {
-    t_Health    tHealthComponents   [MAX_COMPONENTS];
-    t_Position  tPositionComponents [MAX_COMPONENTS];
+    t_Health    atHealthComponents   [MAX_COMPONENTS];
+    t_Position  atPositionComponents [MAX_COMPONENTS];
     int         iTotalHealthComponents;
     int         iTotalPositionComponents;
 } t_ComponentLists;
 
-extern EntityHandle hPlayerHandle;
-extern EntityHandle hEnemyHandle;
+extern EntityHandle ghPlayerHandle;
+extern EntityHandle ghEnemyHandle;
 
 /*****************************************************************************
  * Public Function Prototypes
@@ -52,34 +52,34 @@ EntityHandle entity_Create(void);
 
 /**
  * \brief Atualiza os dados de saude da entidade na estrutura de controle gtComponents.
- * \param tHealth Struct com as informações do handle e saude da entidade.
+ * \param ptHealth Struct com as informações do handle e saude da entidade.
  * \returns RET_OK - Caso sucesso; 
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
-e_Ret entity_UpdateHealth(t_Health * tHealth);
+e_Ret entity_UpdateHealth(t_Health * ptHealth);
 
 /**
  * \brief Atualiza os dados de posicionamento da entidade na estrutura de controle gtComponents.
- * \param tHealth Struct com as informações do handle e posição nova da entidade.
+ * \param ptPosition Struct com as informações do handle e posição nova da entidade.
  * \returns RET_OK - Caso sucesso; 
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
-e_Ret entity_UpdatePosition(t_Position * tPosition);
+e_Ret entity_UpdatePosition(t_Position * ptPosition);
 
 /**
  * \brief Obtem os dados de saude atual da entidade.
- * \param tHealth Struct para envio do handle e recebimento dos dados de saude.
+ * \param ptHealth Struct para envio do handle e recebimento dos dados de saude.
  * \returns RET_OK - Caso sucesso; 
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
-e_Ret entity_CheckHealth(t_Health * tHealth);
+e_Ret entity_CheckHealth(t_Health * ptHealth);
 
 /**
  * \brief Obtem os dados de posicionamento atual da entidade.
- * \param tHealth Struct para envio do handle e recebimento dos dados de posição.
+ * \param ptPosition Struct para envio do handle e recebimento dos dados de posição.
  * \returns RET_OK - Caso sucesso; 
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
-e_Ret entity_CheckPosition(t_Position * tPosition);
+e_Ret entity_CheckPosition(t_Position * ptPosition);
 
 #endif

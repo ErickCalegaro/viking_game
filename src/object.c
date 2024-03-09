@@ -37,9 +37,9 @@
  * Public Function Definitions
  *****************************************************************************/
 
-e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, int iPosX, int iPosY)
+e_Ret object_Create(t_GameObject * ptGameObject, const char * psTextureSheet, int iPosX, int iPosY)
 {
-    ptGameObject->ptTexture  = texture_Load(TextureSheet);
+    ptGameObject->ptTexture  = texture_Load(psTextureSheet);
     if (ptGameObject->ptTexture == NULL){
         printf("Não foi possivel criar a textura!\n");
         return RET_SDL_ERROR;
@@ -51,10 +51,10 @@ e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, int i
     return RET_OK;
 }
 
-e_Ret object_Update(t_GameObject * ptGameObject, t_Position * tPosition)
+e_Ret object_Update(t_GameObject * ptGameObject, t_Position * ptPosition)
 {
-    ptGameObject->iPosX = tPosition->iPosX;
-    ptGameObject->iPosY = tPosition->iPosY;
+    ptGameObject->iPosX = ptPosition->iPosX;
+    ptGameObject->iPosY = ptPosition->iPosY;
 
     ptGameObject->tSourceRect.h = 64;
     ptGameObject->tSourceRect.w = 64;

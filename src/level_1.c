@@ -80,9 +80,9 @@ static e_Ret level_1_Init(void)
  * Public Function Definitions
  *****************************************************************************/
 
-e_Ret level_1_Loop(e_State * eNextState)
+e_Ret level_1_Loop(e_State * peNextState)
 {
-    eNextState = eNextState; //Unref parameter
+    peNextState = peNextState; //Unref parameter
     
     e_Ret   eRet         = RET_OK;
     Uint32  uiFrameStart = 0;

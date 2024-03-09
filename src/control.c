@@ -72,7 +72,7 @@ e_Ret control_TestMove(void)
     t_Position tTempPosition;
 
     //Posição do jogador
-    tTempPosition.iEntityID = hPlayerHandle;
+    tTempPosition.hEntityID = ghPlayerHandle;
     eRet = entity_CheckPosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
@@ -86,13 +86,13 @@ e_Ret control_TestMove(void)
     }
 
     //Posição do inimigo
-    tTempPosition.iEntityID = hEnemyHandle;
+    tTempPosition.hEntityID = ghEnemyHandle;
     eRet = entity_CheckPosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
         return RET_POS_ERROR;
     }
-    tTempPosition.iPosY++;
+    tTempPosition.iPosX--;
     eRet = entity_UpdatePosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel definir novas posicoes para entidade!\n");

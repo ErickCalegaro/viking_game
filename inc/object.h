@@ -15,11 +15,11 @@
  *****************************************************************************/
 
 typedef struct {
-    int iPosX;
-    int iPosY;
-    SDL_Rect        tSourceRect;
-    SDL_Rect        tDestRect;
-    SDL_Texture    *ptTexture;
+    int          iPosX;
+    int          iPosY;
+    SDL_Rect     tSourceRect;
+    SDL_Rect     tDestRect;
+    SDL_Texture *ptTexture;
 } t_GameObject;
 
 /*****************************************************************************
@@ -29,21 +29,21 @@ typedef struct {
 /**
  * \brief Cria um objeto grafico com o path do arquivo e posição inicial.
  * \param ptGameObject Referencia para struct do tipo t_GameObject que receberá o objeto
- * \param TextureSheet Path do arquivo de imagem com a extensão
+ * \param ptTextureSheet Path do arquivo de imagem com a extensão
  * \param iPosX Posição X inicial
  * \param iPosY Posição Y inicial
  * \returns RET_OK - Caso sucesso; 
  *          RET_SDL_ERROR - Caso falhe; 
  */
-e_Ret object_Create(t_GameObject * ptGameObject, const char *TextureSheet, int iPosX, int iPosY);
+e_Ret object_Create(t_GameObject * ptGameObject, const char * ptTextureSheet, int iPosX, int iPosY);
 
 /**
  * \brief Atualiza o objeto de acordo com a referencia de sua estrutura.
  * \param ptGameObject Referencia para struct do objeto que será atualizado.
- * \param tPosition Referencia para struct com as informações de localização do objeto.
+ * \param ptPosition Referencia para struct com as informações de localização do objeto.
  * \returns Retorna sempre RET_OK; 
  */
-e_Ret object_Update(t_GameObject * ptGameObject, t_Position * tPosition);
+e_Ret object_Update(t_GameObject * ptGameObject, t_Position * ptPosition);
 
 /**
  * \brief Renderiza o objeto de acordo com a referencia de sua estrutura.
