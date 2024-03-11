@@ -1,11 +1,9 @@
-#ifndef __CONTROL_H__
-#define __CONTROL_H__
+#ifndef __VECTOR_H__
+#define __VECTOR_H__
 /*****************************************************************************
  * Includes
  *****************************************************************************/
 
-#include "entity.h"
-#include "vector.h"
 
 /*****************************************************************************
  * Preprocessor Macros and Defines
@@ -21,30 +19,18 @@
  * Public Function Prototypes
  *****************************************************************************/
 
-/**
- * \brief Setter de execução do jogo
- * \param bIsRunning Estado que deseja definir a execução
- * \returns void
- */
-void control_SetRunning(bool bIsRunning);
+e_Ret vector_Add(EntityHandle hEntityHandle, int iPosX, int iPosY);
 
-/**
- * \brief Getter de execução do jogo
- * \param void
- * \returns Retorna o estado atual de execução
- */
-bool control_GetRunning(void);
+e_Ret vector_Subtract(EntityHandle hEntityHandle, int iPosX, int iPosY);
 
-/**
- * \brief Gerenciador de eventos do SO.
- *      Alterar estes retornos para enum de eventos
- * \param void
- * \returns RET_OK - Caso sucesso; 
- *          RET_ABORT - Caso janela seja fechada;  
- */
-e_Ret control_HandleEvents(void); 
+e_Ret vector_Multiply(EntityHandle hEntityHandle, int iPosX, int iPosY);
 
-//Test Only
-e_Ret control_TestMove(void);
+e_Ret vector_Divide(EntityHandle hEntityHandle, int iPosX, int iPosY);
+
+int vector_GetX(EntityHandle hEntityHandle);
+
+int vector_GetY(EntityHandle hEntityHandle);
+
+void vector_Print(EntityHandle hEntityHandle);
 
 #endif
