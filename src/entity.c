@@ -44,7 +44,7 @@ static int entity_GetNewID(void);
 /**
  * \brief Obtem o index do componente de acordo com o handle informado.
  * \param hHandle Handle(ou ID primario) da entidade, que foi retornado por entity_Create;
- * \returns Caso sucesso, retorna o index fisico do componente(atHealthComponents ou atPositionComponents) em gtComponents; 
+ * \returns Caso sucesso, retorna o index fisico do componente em gtComponents; 
  *          Caso o handle seja inválido retorna -1;
  *          Caso não encontre o id com o handle informado retorna -2;
  */
@@ -79,6 +79,12 @@ static int entity_GetIndexByHandle(EntityHandle hHandle)
 /*****************************************************************************
  * Public Function Definitions
  *****************************************************************************/
+
+void entity_Init(void)
+{
+    memset(&gtComponents, 0x00, sizeof(gtComponents));
+	return;
+}
 
 EntityHandle entity_Create(void)
 {
@@ -125,6 +131,34 @@ e_Ret entity_UpdatePosition(t_Position * ptPosition)
     return RET_OK;
 }
 
+e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity)
+{
+    int iTempPos = 0;
+    int iEntityIndex = 0;
+    
+    iEntityIndex = entity_GetIndexByHandle(ptVelocity->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    iTempPos = vector_GetX(ptVelocity->hEntityID);
+    if (iTempPos < 0){
+        printf("Erro ao resgatar o Vetor X da entidade!\n");
+        return RET_POS_ERROR;
+    }
+    gtComponents.atPositionComponents[iEntityIndex].iPosX = iTempPos + (ptVelocity->iVelocityX * SPEED);
+
+    iTempPos = vector_GetY(ptVelocity->hEntityID);
+    if (iTempPos < 0){
+        printf("Erro ao resgatar o Vetor Y da entidade!\n");
+        return RET_POS_ERROR;
+    }
+    gtComponents.atPositionComponents[iEntityIndex].iPosY = iTempPos + (ptVelocity->iVelocityY * SPEED);
+
+    return RET_OK;
+}
+
 e_Ret entity_CheckHealth(t_Health * ptHealth)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptHealth->hEntityID);
@@ -149,6 +183,9 @@ e_Ret entity_CheckPosition(t_Position * ptPosition)
 
     ptPosition->iPosX = gtComponents.atPositionComponents[iEntityIndex].iPosX;
     ptPosition->iPosY = gtComponents.atPositionComponents[iEntityIndex].iPosY;
+
+    // printf("ptPosition->iPosX = [%d]\n", ptPosition->iPosX);
+    // printf("ptPosition->iPosY = [%d]\n", ptPosition->iPosY);
 
     return RET_OK;
 }

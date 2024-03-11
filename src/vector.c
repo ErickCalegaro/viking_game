@@ -151,7 +151,6 @@ e_Ret vector_Divide(EntityHandle hEntityHandle, int iPosX, int iPosY)
 
 int vector_GetX(EntityHandle hEntityHandle)
 {
-    {
     t_Position tTempPosition;
 
     tTempPosition.hEntityID = hEntityHandle;
@@ -161,7 +160,6 @@ int vector_GetX(EntityHandle hEntityHandle)
     }
 
     return tTempPosition.iPosX;
-}
 }
 
 int vector_GetY(EntityHandle hEntityHandle)

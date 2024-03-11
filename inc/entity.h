@@ -10,6 +10,7 @@
  *****************************************************************************/
 
 #define MAX_COMPONENTS 100
+#define SPEED          3
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
@@ -29,6 +30,12 @@ typedef struct {
 } t_Health;
 
 typedef struct {
+    EntityHandle    hEntityID;
+    int             iVelocityX;
+    int             iVelocityY;
+} t_Velocity;
+
+typedef struct {
     t_Health    atHealthComponents   [MAX_COMPONENTS];
     t_Position  atPositionComponents [MAX_COMPONENTS];
     int         iTotalHealthComponents;
@@ -41,6 +48,13 @@ extern EntityHandle ghEnemyHandle;
 /*****************************************************************************
  * Public Function Prototypes
  *****************************************************************************/
+
+/**
+ * \brief Inicializa o modulo de componentes e zera gtComponents
+ * \param void
+ * \returns void
+ */
+void entity_Init(void);
 
 /**
  * \brief Inicializa uma nova entidade na estrutura global gtComponents
@@ -65,6 +79,16 @@ e_Ret entity_UpdateHealth(t_Health * ptHealth);
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
 e_Ret entity_UpdatePosition(t_Position * ptPosition);
+
+/**
+ * \brief Atualiza os dados de posicionamento da entidade na estrutura de controle gtComponents, 
+ *          com base em um atributo da direcional passado por parâmetro.
+ * \param ptVelocity Struct com as informações do handle e velocidade de movimento.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_INV_PARAM - Caso receba um handle inválido;
+ *          RET_POS_ERROR - Caso falhe na obtenção da posição da entidade; 
+ */
+e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity);
 
 /**
  * \brief Obtem os dados de saude atual da entidade.
