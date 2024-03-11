@@ -102,8 +102,8 @@ static e_Ret screen_CreatePlayer(void)
     }
 
     tTempPosition.hEntityID = ghPlayerHandle;
-    tTempPosition.iPosX     = 0;
-    tTempPosition.iPosY     = 0;
+    tTempPosition.iPosX     = 1;
+    tTempPosition.iPosY     = 1;
     eRet = entity_UpdatePosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
@@ -134,7 +134,7 @@ static e_Ret screen_CreateEnemy(void)
 
     tTempPosition.hEntityID = ghEnemyHandle;
     tTempPosition.iPosX     = SCREEN_WIDTH;
-    tTempPosition.iPosY     = 0;
+    tTempPosition.iPosY     = 1;
     eRet = entity_UpdatePosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel definir posicoes iniciais para entidade!\n");

@@ -130,13 +130,13 @@ e_Ret vector_Divide(EntityHandle hEntityHandle, int iPosX, int iPosY)
         return RET_POS_ERROR;
     }
 
-    if (iPosX != 0){
-        fTempVar = (float)tTempPosition.iPosX * (float)iPosX;
+    if (iPosX != 0 && tTempPosition.iPosX != 0){
+        fTempVar = (float)tTempPosition.iPosX / (float)iPosX;
         tTempPosition.iPosX = (int)fTempVar;
     }
 
-    if (iPosY != 0){
-        fTempVar = (float)tTempPosition.iPosY * (float)iPosY;
+    if (iPosY != 0 && tTempPosition.iPosY != 0){
+        fTempVar = (float)tTempPosition.iPosY / (float)iPosY;
         tTempPosition.iPosY = (int)fTempVar;
     }
 

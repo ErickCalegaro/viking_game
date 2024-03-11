@@ -22,7 +22,7 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
-static bool gbIsRunning = FALSE;
+static bool gbIsRunning = false;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -55,7 +55,7 @@ e_Ret control_HandleEvents(void)
     switch (tEvent.type)
     {
         case SDL_QUIT:
-            control_SetRunning(FALSE);
+            control_SetRunning(false);
             printf("Encerrando o jogo!\n");
             return RET_ABORT;
         default:
