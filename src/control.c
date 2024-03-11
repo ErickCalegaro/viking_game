@@ -22,7 +22,7 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
-static bool gbIsRunning = FALSE;
+static bool gbIsRunning = false;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -55,7 +55,7 @@ e_Ret control_HandleEvents(void)
     switch (tEvent.type)
     {
         case SDL_QUIT:
-            control_SetRunning(FALSE);
+            control_SetRunning(false);
             printf("Encerrando o jogo!\n");
             return RET_ABORT;
         default:
@@ -69,33 +69,18 @@ e_Ret control_HandleEvents(void)
 e_Ret control_TestMove(void)
 {
     e_Ret eRet = RET_OK;
-    t_Position tTempPosition;
 
-    //Posição do jogador
-    tTempPosition.hEntityID = ghPlayerHandle;
-    eRet = entity_CheckPosition(&tTempPosition);
+    //Posição do player
+    eRet = vector_Add(ghPlayerHandle, 5, 0);
     if (eRet){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
-        return RET_POS_ERROR;
-    }
-    tTempPosition.iPosX++;
-    eRet = entity_UpdatePosition(&tTempPosition);
-    if (eRet){
-        printf("Nao foi possivel definir novas posicoes para entidade!\n");
         return RET_POS_ERROR;
     }
 
     //Posição do inimigo
-    tTempPosition.hEntityID = ghEnemyHandle;
-    eRet = entity_CheckPosition(&tTempPosition);
+    eRet = vector_Subtract(ghEnemyHandle, 5, 0);
     if (eRet){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
-        return RET_POS_ERROR;
-    }
-    tTempPosition.iPosX--;
-    eRet = entity_UpdatePosition(&tTempPosition);
-    if (eRet){
-        printf("Nao foi possivel definir novas posicoes para entidade!\n");
         return RET_POS_ERROR;
     }
 

@@ -72,14 +72,14 @@ static e_Ret main_Init(void)
         return eRet;
     }
     
-    eRet = screen_CreateWindow(FALSE);
+    eRet = screen_CreateWindow(false);
     if (eRet){
         printf("Janela principal nao pode ser criada!\n");
         return eRet;
     }
 
     // Se chegou aqui o SDL está em execução
-    control_SetRunning(TRUE);
+    control_SetRunning(true);
 
     return RET_OK;
 }
