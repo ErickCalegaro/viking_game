@@ -7,7 +7,10 @@
         "level_1.h": "c",
         "sdl.h": "c",
         "object.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "sdl_keycode.h": "c",
+        "sdl_keyboard.h": "c",
+        "sdl_error.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

@@ -20,7 +20,7 @@
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
-#define FPS             60
+#define FPS             120
 #define FRAME_DELAY     1000 / FPS
 
 #define SCREEN_WIDTH    800

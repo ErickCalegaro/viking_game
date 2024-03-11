@@ -66,6 +66,9 @@ static e_Ret main_Init(void)
 {
     e_Ret eRet = RET_OK;
 
+    //Limpa qualquer lixo possivel
+    entity_Init();
+
     eRet = screen_InitSDL();
     if (eRet){
         printf("Biblioteca Grafica nao pode ser inicializada!\n");

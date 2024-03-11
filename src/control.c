@@ -23,6 +23,7 @@
  *****************************************************************************/
 
 static bool gbIsRunning = false;
+SDL_Event gtEvent;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -50,9 +51,8 @@ void control_SetRunning(bool bIsRunning)
 
 e_Ret control_HandleEvents(void)
 {
-    SDL_Event tEvent;
-    SDL_PollEvent(&tEvent);
-    switch (tEvent.type)
+    SDL_PollEvent(&gtEvent);
+    switch (gtEvent.type)
     {
         case SDL_QUIT:
             control_SetRunning(false);
@@ -60,28 +60,6 @@ e_Ret control_HandleEvents(void)
             return RET_ABORT;
         default:
             break;
-    }
-
-    return RET_OK;
-}
-
-//Temp test only
-e_Ret control_TestMove(void)
-{
-    e_Ret eRet = RET_OK;
-
-    //Posição do player
-    eRet = vector_Add(ghPlayerHandle, 5, 0);
-    if (eRet){
-        printf("Nao foi possivel obter as posicoes da entidade!\n");
-        return RET_POS_ERROR;
-    }
-
-    //Posição do inimigo
-    eRet = vector_Subtract(ghEnemyHandle, 5, 0);
-    if (eRet){
-        printf("Nao foi possivel obter as posicoes da entidade!\n");
-        return RET_POS_ERROR;
     }
 
     return RET_OK;

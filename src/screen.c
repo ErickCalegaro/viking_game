@@ -235,7 +235,7 @@ e_Ret screen_Update(void)
         return RET_OBJ_ERROR;
     }
 
-    printf("giCount = [%d]\n", giCount);
+    // printf("giCount = [%d]\n", giCount);
     return eRet;
 }
 
