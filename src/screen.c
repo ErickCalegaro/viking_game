@@ -85,7 +85,8 @@ static e_Ret screen_DrawBackground(void)
 static e_Ret screen_CreatePlayer(void)
 {
     e_Ret eRet = RET_OK;
-    t_Position tTempPosition;
+    t_Position  tTempPosition;
+    t_Scale     tTempScale;
     
     memset(&gtPlayerObject, 0x00, sizeof(gtPlayerObject));
 
@@ -109,6 +110,15 @@ static e_Ret screen_CreatePlayer(void)
         printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
         return RET_POS_ERROR;
     }
+
+    tTempScale.hEntityID = ghPlayerHandle;
+    tTempScale.iHeight   = 64;
+    tTempScale.iWidth    = 64;
+    eRet = entity_UpdateScale(&tTempScale);
+    if (eRet){
+        printf("Nao foi possivel definir escala inicial para entidade!\n");
+        return RET_POS_ERROR;
+    }
     
     return RET_OK;
 }
@@ -116,7 +126,8 @@ static e_Ret screen_CreatePlayer(void)
 static e_Ret screen_CreateEnemy(void)
 {
     e_Ret eRet = RET_OK;
-    t_Position tTempPosition;
+    t_Position  tTempPosition;
+    t_Scale     tTempScale;
     
     memset(&gtEnemyObject, 0x00, sizeof(gtEnemyObject));
     
@@ -138,6 +149,15 @@ static e_Ret screen_CreateEnemy(void)
     eRet = entity_UpdatePosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
+        return RET_POS_ERROR;
+    }
+
+    tTempScale.hEntityID = ghEnemyHandle;
+    tTempScale.iHeight   = 64;
+    tTempScale.iWidth    = 64;
+    eRet = entity_UpdateScale(&tTempScale);
+    if (eRet){
+        printf("Nao foi possivel definir escala inicial para entidade!\n");
         return RET_POS_ERROR;
     }
     

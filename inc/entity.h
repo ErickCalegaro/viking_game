@@ -25,6 +25,12 @@ typedef struct {
 
 typedef struct {
     EntityHandle    hEntityID;
+    int             iHeight;
+    int             iWidth;
+} t_Scale;
+
+typedef struct {
+    EntityHandle    hEntityID;
     int             iCurrHealth;
     int             iMaxHealth;
 } t_Health;
@@ -38,8 +44,10 @@ typedef struct {
 typedef struct {
     t_Health    atHealthComponents   [MAX_COMPONENTS];
     t_Position  atPositionComponents [MAX_COMPONENTS];
+    t_Scale     atScaleComponents    [MAX_COMPONENTS];
     int         iTotalHealthComponents;
     int         iTotalPositionComponents;
+    int         iTotalScaleComponents;
 } t_ComponentLists;
 
 extern EntityHandle ghPlayerHandle;
@@ -90,6 +98,8 @@ e_Ret entity_UpdatePosition(t_Position * ptPosition);
  */
 e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity);
 
+e_Ret entity_UpdateScale(t_Scale * ptScale);
+
 /**
  * \brief Obtem os dados de saude atual da entidade.
  * \param ptHealth Struct para envio do handle e recebimento dos dados de saude.
@@ -105,5 +115,7 @@ e_Ret entity_CheckHealth(t_Health * ptHealth);
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
 e_Ret entity_CheckPosition(t_Position * ptPosition);
+
+e_Ret entity_CheckScale(t_Scale * ptScale);
 
 #endif

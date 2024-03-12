@@ -13,6 +13,7 @@
 #include "texture.h"
 #include "object.h"
 #include "map.h"
+#include "collision.h"
 
 #include "level_1.h"
 

@@ -79,8 +79,8 @@ e_Ret map_Create(e_State eState)
 
     gtSourceRect.x = gtSourceRect.y = 0;
     gtDestRect.x   = gtDestRect.y   = 0;
-    gtSourceRect.h = gtDestRect.h   = 32;
-    gtSourceRect.w = gtDestRect.w   = 32;
+    gtSourceRect.h = gtDestRect.h   = TILE_SCALE;
+    gtSourceRect.w = gtDestRect.w   = TILE_SCALE;
 
     return RET_OK;
 }
@@ -107,8 +107,8 @@ e_Ret map_Draw(void)
         {
             eTileType = gaCurrMap[iRow][iColumn];
 
-            gtDestRect.x = iColumn * 32;
-            gtDestRect.y = iRow * 32;
+            gtDestRect.x = iColumn * TILE_SCALE;
+            gtDestRect.y = iRow * TILE_SCALE;
 
             switch (eTileType)
             {

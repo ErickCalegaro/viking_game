@@ -11,6 +11,7 @@
 
 #define NUM_ROWS    20
 #define NUM_COLUMNS 25
+#define TILE_SCALE  32
 
 #define TILE_DIRT_L1    "level1/dirt.png"
 #define TILE_GRASS_L1   "level1/grass.png"
