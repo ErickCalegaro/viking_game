@@ -30,7 +30,8 @@ Passo a passo para realizar uma copia de desenvolvimento operando na sua maquina
 Precisaremos instalar os seguintes pacotes para o desenvolvimento:
 * VS Code: https://code.visualstudio.com/docs/?dv=win64user
 * Git Bash: https://github.com/git-for-windows/git/releases/download/v2.44.0.windows.1/Git-2.44.0-64-bit.exe
-* mingw: https://www.mingw-w64.org/downloads/#w64devkit
+* mingw: https://www.mingw-w64.org/downloads/#w64devkit (GCC e make)
+
 
 Após a instalação, execute o comando abaixo para garantir que seu ambiente está OK:
 * `git version`
@@ -106,7 +107,7 @@ Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as vers�
 
 ## 🎁 Expressões de gratidão
 * Conte a outras pessoas sobre este projeto 📢;
-* Convide o desenvolvesor para tomar uma IPA 🍺;
+* Convide o desenvolvedor para tomar uma IPA 🍺;
 
 ## 📞 Contato
 * Qualquer duvida ou sugestão, pode entrar em contato pelo WhatsApp **[(11) 95582-8684](https://api.whatsapp.com/send?phone=5511955828684&text=Ol%C3%A1%2C%20estou%20com%20duvidas%20sobre%20o%20projeto%20Viking%20Game%2C%20pode%20me%20auxiliar%3F)**
