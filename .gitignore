@@ -18,11 +18,11 @@
 
 # Libraries
 *.lib
-*.a
-*.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
+# Output path
+output
+
 
 # Executables
 *.out
