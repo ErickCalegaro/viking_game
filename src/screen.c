@@ -85,7 +85,6 @@ static e_Ret screen_DrawBackground(void)
 static e_Ret screen_CreatePlayer(void)
 {
     e_Ret eRet = RET_OK;
-    t_Position tTempPosition;
     
     memset(&gtPlayerObject, 0x00, sizeof(gtPlayerObject));
 
@@ -101,12 +100,41 @@ static e_Ret screen_CreatePlayer(void)
         return RET_INIT_ERROR;
     }
 
-    tTempPosition.hEntityID = ghPlayerHandle;
-    tTempPosition.iPosX     = 1;
-    tTempPosition.iPosY     = 1;
-    eRet = entity_UpdatePosition(&tTempPosition);
+    t_Position tPosition;
+    tPosition.hEntityID = ghPlayerHandle;
+    tPosition.iPosX     = 1;
+    tPosition.iPosY     = 1;
+    eRet = entity_UpdatePosition(&tPosition);
     if (eRet){
         printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
+        return RET_POS_ERROR;
+    }
+
+    t_Scale tScale;
+    tScale.hEntityID = ghPlayerHandle;
+    tScale.iHeight   = 64;
+    tScale.iWidth    = 64;
+    eRet = entity_UpdateScale(&tScale);
+    if (eRet){
+        printf("Nao foi possivel definir escala inicial para entidade!\n");
+        return RET_POS_ERROR;
+    }
+
+    //A colisão geralmente é menor que o sprite
+    t_Collision tCollision; 
+    tCollision.hEntityID = ghPlayerHandle;
+
+    //Posição de inicio do personagem no sprite
+    tCollision.iPosX    = 12;
+    tCollision.iPosY    = 21;
+
+    //Tamanho total do personagem no sprite
+    tCollision.iHeight  = 41;
+    tCollision.iWidth   = 47;
+
+    eRet = entity_UpdateCollision(&tCollision);
+    if (eRet){
+        printf("Nao foi possivel definir escala inicial para entidade!\n");
         return RET_POS_ERROR;
     }
     
@@ -116,7 +144,8 @@ static e_Ret screen_CreatePlayer(void)
 static e_Ret screen_CreateEnemy(void)
 {
     e_Ret eRet = RET_OK;
-    t_Position tTempPosition;
+    t_Position  tTempPosition;
+    t_Scale     tTempScale;
     
     memset(&gtEnemyObject, 0x00, sizeof(gtEnemyObject));
     
@@ -138,6 +167,15 @@ static e_Ret screen_CreateEnemy(void)
     eRet = entity_UpdatePosition(&tTempPosition);
     if (eRet){
         printf("Nao foi possivel definir posicoes iniciais para entidade!\n");
+        return RET_POS_ERROR;
+    }
+
+    tTempScale.hEntityID = ghEnemyHandle;
+    tTempScale.iHeight   = 64;
+    tTempScale.iWidth    = 64;
+    eRet = entity_UpdateScale(&tTempScale);
+    if (eRet){
+        printf("Nao foi possivel definir escala inicial para entidade!\n");
         return RET_POS_ERROR;
     }
     

@@ -25,6 +25,20 @@ typedef struct {
 
 typedef struct {
     EntityHandle    hEntityID;
+    int             iHeight;
+    int             iWidth;
+} t_Scale;
+
+typedef struct {
+    EntityHandle    hEntityID;
+    int             iPosX;
+    int             iPosY;
+    int             iHeight;
+    int             iWidth;
+} t_Collision;
+
+typedef struct {
+    EntityHandle    hEntityID;
     int             iCurrHealth;
     int             iMaxHealth;
 } t_Health;
@@ -36,10 +50,13 @@ typedef struct {
 } t_Velocity;
 
 typedef struct {
-    t_Health    atHealthComponents   [MAX_COMPONENTS];
-    t_Position  atPositionComponents [MAX_COMPONENTS];
+    t_Health    atHealthComponents    [MAX_COMPONENTS];
+    t_Position  atPositionComponents  [MAX_COMPONENTS];
+    t_Scale     atScaleComponents     [MAX_COMPONENTS];
+    t_Collision atCollisionComponents [MAX_COMPONENTS];
     int         iTotalHealthComponents;
     int         iTotalPositionComponents;
+    int         iTotalScaleComponents;
 } t_ComponentLists;
 
 extern EntityHandle ghPlayerHandle;
@@ -91,6 +108,22 @@ e_Ret entity_UpdatePosition(t_Position * ptPosition);
 e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity);
 
 /**
+ * \brief Atualiza os dados de escala do sprite usado na estrutura de controle gtComponents.
+ * \param ptScale Struct com as informações do handle, tamanho e altura do sprite da entidade.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_INV_PARAM - Caso receba um handle inválido;
+ */
+e_Ret entity_UpdateScale(t_Scale * ptScale);
+
+/**
+ * \brief Atualiza os dados de colisão fisica da entidade na estrutura de controle gtComponents.
+ * \param ptCollision Struct com as informações do handle, posições iniciais e escala fisica do personagem no sprite.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_INV_PARAM - Caso receba um handle inválido;
+ */
+e_Ret entity_UpdateCollision(t_Collision * ptCollision);
+
+/**
  * \brief Obtem os dados de saude atual da entidade.
  * \param ptHealth Struct para envio do handle e recebimento dos dados de saude.
  * \returns RET_OK - Caso sucesso; 
@@ -105,5 +138,21 @@ e_Ret entity_CheckHealth(t_Health * ptHealth);
  *          RET_INV_PARAM - Caso receba um handle inválido;
  */
 e_Ret entity_CheckPosition(t_Position * ptPosition);
+
+/**
+ * \brief Obtem os dados de escala do sprite usado na entidade.
+ * \param ptScale Struct com as informações do handle, tamanho e altura do sprite da entidade.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_INV_PARAM - Caso receba um handle inválido;
+ */
+e_Ret entity_CheckScale(t_Scale * ptScale);
+
+/**
+ * \brief Obtem os dados de colisão fisica do personagem da entidade.
+ * \param ptCollision Struct com as informações do handle, posições iniciais e escala fisica do personagem no sprite.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_INV_PARAM - Caso receba um handle inválido;
+ */
+e_Ret entity_CheckCollision(t_Collision * ptCollision);
 
 #endif

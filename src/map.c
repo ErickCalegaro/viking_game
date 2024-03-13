@@ -26,7 +26,7 @@ static SDL_Rect        gtSourceRect;
 static SDL_Rect        gtDestRect;
 static SDL_Texture    *gptTextureDirt;
 static SDL_Texture    *gptTextureGrass;
-static int             gaCurrMap[NUM_ROWS][NUM_COLUMNS];
+static e_TileType      gaCurrMap[NUM_ROWS][NUM_COLUMNS];
 
 
 /*****************************************************************************
@@ -79,13 +79,13 @@ e_Ret map_Create(e_State eState)
 
     gtSourceRect.x = gtSourceRect.y = 0;
     gtDestRect.x   = gtDestRect.y   = 0;
-    gtSourceRect.h = gtDestRect.h   = 32;
-    gtSourceRect.w = gtDestRect.w   = 32;
+    gtSourceRect.h = gtDestRect.h   = TILE_SCALE;
+    gtSourceRect.w = gtDestRect.w   = TILE_SCALE;
 
     return RET_OK;
 }
 
-e_Ret map_Load(int aNewMap[NUM_ROWS][NUM_COLUMNS])
+e_Ret map_Load(e_TileType aNewMap[NUM_ROWS][NUM_COLUMNS])
 {
     for (int iRow = 0; iRow < NUM_ROWS; iRow++){
         for (int iColumn = 0; iColumn < NUM_COLUMNS; iColumn++){
@@ -107,8 +107,8 @@ e_Ret map_Draw(void)
         {
             eTileType = gaCurrMap[iRow][iColumn];
 
-            gtDestRect.x = iColumn * 32;
-            gtDestRect.y = iRow * 32;
+            gtDestRect.x = iColumn * TILE_SCALE;
+            gtDestRect.y = iRow * TILE_SCALE;
 
             switch (eTileType)
             {

@@ -94,6 +94,12 @@ Agora iremos abordar como você pode executar uma release oficial deste projeto.
 * [SDL2](https://wiki.libsdl.org/SDL2/FrontPage) - Biblioteca Gráfica SDL2
 
 ## 💬 FAQ
+
+#### Como desabilitar resultados dos headers da SDL2 no Ctrl + Shift + F:
+* Acessar File ➡️ Preferences ➡️ Settings ➡️ User/Workspace Settings
+* Buscar por `search.exclude`
+* Adicionar a pasta `**\SDL2`
+
 RFU
 
 ## 📌 Versão

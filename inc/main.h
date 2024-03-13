@@ -20,6 +20,7 @@
 typedef enum e_Ret_tag {
     RET_OK = 0,
     RET_ABORT,
+    RET_COLLISION,
     RET_INV_PARAM,
     RET_INIT_ERROR,
     RET_SDL_ERROR,

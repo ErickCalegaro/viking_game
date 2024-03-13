@@ -67,7 +67,7 @@ static int entity_GetIndexByHandle(EntityHandle hHandle)
     }
     
     for (int i = 0; i < MAX_COMPONENTS; i++){
-        if (gtComponents.atHealthComponents[i].hEntityID == hHandle){
+        if (gtComponents.atPositionComponents[i].hEntityID == hHandle){ // !TODO: Levar em consideração outros componentes
             return i;
         }
     }
@@ -97,8 +97,10 @@ EntityHandle entity_Create(void)
 
     gtComponents.atHealthComponents[iLocalID].hEntityID = iLocalID; //[iLocalID] se tornara um problema
     gtComponents.atPositionComponents[iLocalID].hEntityID = iLocalID;
+    gtComponents.atScaleComponents[iLocalID].hEntityID = iLocalID;
     gtComponents.iTotalHealthComponents++;
     gtComponents.iTotalPositionComponents++;
+    gtComponents.iTotalScaleComponents++;
 
     return iLocalID;
 }
@@ -133,8 +135,10 @@ e_Ret entity_UpdatePosition(t_Position * ptPosition)
 
 e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity)
 {
-    int iTempPos = 0;
     int iEntityIndex = 0;
+
+    t_Position tNewPosition;
+    tNewPosition.hEntityID = ptVelocity->hEntityID;
     
     iEntityIndex = entity_GetIndexByHandle(ptVelocity->hEntityID);
     if (iEntityIndex < RET_OK){
@@ -142,22 +146,63 @@ e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity)
         return RET_INV_PARAM;
     }
 
-    iTempPos = vector_GetX(ptVelocity->hEntityID);
-    if (iTempPos < 0){
+    tNewPosition.iPosX = vector_GetX(ptVelocity->hEntityID);
+    if (tNewPosition.iPosX < 0){
         printf("Erro ao resgatar o Vetor X da entidade!\n");
         return RET_POS_ERROR;
     }
-    gtComponents.atPositionComponents[iEntityIndex].iPosX = iTempPos + (ptVelocity->iVelocityX * SPEED);
 
-    iTempPos = vector_GetY(ptVelocity->hEntityID);
-    if (iTempPos < 0){
+    tNewPosition.iPosY = vector_GetY(ptVelocity->hEntityID);
+    if (tNewPosition.iPosY < 0){
         printf("Erro ao resgatar o Vetor Y da entidade!\n");
         return RET_POS_ERROR;
     }
-    gtComponents.atPositionComponents[iEntityIndex].iPosY = iTempPos + (ptVelocity->iVelocityY * SPEED);
+
+    tNewPosition.iPosX += (ptVelocity->iVelocityX * SPEED);
+    tNewPosition.iPosY += (ptVelocity->iVelocityY * SPEED);
+
+    // Verifica a colisão antes que ela aconteça
+    if (collision_CheckVector(&tNewPosition)){  
+        // printf("Colisao identificada!\n");
+        return RET_COLLISION;
+    }
+
+    gtComponents.atPositionComponents[iEntityIndex].iPosX = tNewPosition.iPosX;
+    gtComponents.atPositionComponents[iEntityIndex].iPosY = tNewPosition.iPosY;
 
     return RET_OK;
 }
+
+e_Ret entity_UpdateScale(t_Scale * ptScale)
+{
+    int iEntityIndex = entity_GetIndexByHandle(ptScale->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    gtComponents.atScaleComponents[iEntityIndex].iHeight = ptScale->iHeight;
+    gtComponents.atScaleComponents[iEntityIndex].iWidth = ptScale->iWidth;
+
+    return RET_OK;
+}
+
+e_Ret entity_UpdateCollision(t_Collision * ptCollision)
+{
+    int iEntityIndex = entity_GetIndexByHandle(ptCollision->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    gtComponents.atCollisionComponents[iEntityIndex].iPosX   = ptCollision->iPosX;
+    gtComponents.atCollisionComponents[iEntityIndex].iPosY   = ptCollision->iPosY;
+    gtComponents.atCollisionComponents[iEntityIndex].iHeight = ptCollision->iHeight;
+    gtComponents.atCollisionComponents[iEntityIndex].iWidth  = ptCollision->iWidth;
+
+    return RET_OK;
+}
+
 
 e_Ret entity_CheckHealth(t_Health * ptHealth)
 {
@@ -187,5 +232,35 @@ e_Ret entity_CheckPosition(t_Position * ptPosition)
     // printf("ptPosition->iPosX = [%d]\n", ptPosition->iPosX);
     // printf("ptPosition->iPosY = [%d]\n", ptPosition->iPosY);
 
+    return RET_OK;
+}
+
+e_Ret entity_CheckScale(t_Scale * ptScale)
+{
+    int iEntityIndex = entity_GetIndexByHandle(ptScale->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    ptScale->iHeight = gtComponents.atScaleComponents[iEntityIndex].iHeight;
+    ptScale->iWidth = gtComponents.atScaleComponents[iEntityIndex].iWidth;
+
+    return RET_OK;
+}
+
+e_Ret entity_CheckCollision(t_Collision * ptCollision)
+{
+    int iEntityIndex = entity_GetIndexByHandle(ptCollision->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    ptCollision->iPosX   = gtComponents.atCollisionComponents[iEntityIndex].iPosX;
+    ptCollision->iPosY   = gtComponents.atCollisionComponents[iEntityIndex].iPosY;
+    ptCollision->iHeight = gtComponents.atCollisionComponents[iEntityIndex].iHeight;
+    ptCollision->iWidth  = gtComponents.atCollisionComponents[iEntityIndex].iWidth;
+    
     return RET_OK;
 }

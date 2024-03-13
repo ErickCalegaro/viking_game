@@ -91,7 +91,7 @@ e_Ret keyboard_HandleEvents(void)
         gtEvent.key.keysym.sym == SDLK_d ){
     
         eRet = entity_UpdateVelocity(&ptPlayerVelocity);
-        if (eRet){
+        if (eRet != RET_OK && eRet != RET_COLLISION){
             printf("Erro ao gerenciar velocidade!\n");
             return RET_POS_ERROR;
         }

@@ -13,6 +13,7 @@
 #include "texture.h"
 #include "object.h"
 #include "map.h"
+#include "collision.h"
 
 #include "level_1.h"
 
@@ -20,7 +21,7 @@
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
-#define FPS             120
+#define FPS             60
 #define FRAME_DELAY     1000 / FPS
 
 #define SCREEN_WIDTH    800
