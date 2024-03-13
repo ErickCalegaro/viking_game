@@ -161,8 +161,9 @@ e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity)
     tNewPosition.iPosX += (ptVelocity->iVelocityX * SPEED);
     tNewPosition.iPosY += (ptVelocity->iVelocityY * SPEED);
 
-    if (collision_CheckVector(&tNewPosition)){
-        printf("Colisao identificada!\n");
+    // Verifica a colisão antes que ela aconteça
+    if (collision_CheckVector(&tNewPosition)){  
+        // printf("Colisao identificada!\n");
         return RET_COLLISION;
     }
 
@@ -185,6 +186,23 @@ e_Ret entity_UpdateScale(t_Scale * ptScale)
 
     return RET_OK;
 }
+
+e_Ret entity_UpdateCollision(t_Collision * ptCollision)
+{
+    int iEntityIndex = entity_GetIndexByHandle(ptCollision->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    gtComponents.atCollisionComponents[iEntityIndex].iPosX   = ptCollision->iPosX;
+    gtComponents.atCollisionComponents[iEntityIndex].iPosY   = ptCollision->iPosY;
+    gtComponents.atCollisionComponents[iEntityIndex].iHeight = ptCollision->iHeight;
+    gtComponents.atCollisionComponents[iEntityIndex].iWidth  = ptCollision->iWidth;
+
+    return RET_OK;
+}
+
 
 e_Ret entity_CheckHealth(t_Health * ptHealth)
 {
@@ -228,5 +246,21 @@ e_Ret entity_CheckScale(t_Scale * ptScale)
     ptScale->iHeight = gtComponents.atScaleComponents[iEntityIndex].iHeight;
     ptScale->iWidth = gtComponents.atScaleComponents[iEntityIndex].iWidth;
 
+    return RET_OK;
+}
+
+e_Ret entity_CheckCollision(t_Collision * ptCollision)
+{
+    int iEntityIndex = entity_GetIndexByHandle(ptCollision->hEntityID);
+    if (iEntityIndex < RET_OK){
+        printf("Index invalido!\n");
+        return RET_INV_PARAM;
+    }
+
+    ptCollision->iPosX   = gtComponents.atCollisionComponents[iEntityIndex].iPosX;
+    ptCollision->iPosY   = gtComponents.atCollisionComponents[iEntityIndex].iPosY;
+    ptCollision->iHeight = gtComponents.atCollisionComponents[iEntityIndex].iHeight;
+    ptCollision->iWidth  = gtComponents.atCollisionComponents[iEntityIndex].iWidth;
+    
     return RET_OK;
 }

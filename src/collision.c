@@ -22,7 +22,7 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
-static int             gaCollisionMap[NUM_ROWS][NUM_COLUMNS];
+static e_TileType gaCollisionMap[NUM_ROWS][NUM_COLUMNS];
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -38,7 +38,7 @@ static int             gaCollisionMap[NUM_ROWS][NUM_COLUMNS];
  * Public Function Definitions
  *****************************************************************************/
 
-void collision_Load(int aNewCollision[NUM_ROWS][NUM_COLUMNS])
+void collision_Load(e_TileType aNewCollision[NUM_ROWS][NUM_COLUMNS])
 {
     for (int iRow = 0; iRow < NUM_ROWS; iRow++){
         for (int iColumn = 0; iColumn < NUM_COLUMNS; iColumn++){
@@ -95,11 +95,11 @@ bool collision_Check(EntityHandle hEntityHandle)
 bool collision_CheckVector(t_Position * tPositionEntity)
 {
     t_Position  tPositionTile;
-    t_Scale     tScaleEntity;
+    t_Collision tCollisionBlock;
     e_TileType  eTileType;
 
-    tScaleEntity.hEntityID = tPositionEntity->hEntityID;
-    if (entity_CheckScale(&tScaleEntity)){
+    tCollisionBlock.hEntityID = tPositionEntity->hEntityID;
+    if (entity_CheckCollision(&tCollisionBlock)){
         printf("Nao foi possivel obter a escala da entidade!\n");
         return false;
     }
@@ -113,12 +113,15 @@ bool collision_CheckVector(t_Position * tPositionEntity)
             tPositionTile.iPosX = iColumn * TILE_SCALE;
             tPositionTile.iPosY = iRow * TILE_SCALE;
 
-            if (eTileType == TILE_DIRT ||
-                eTileType == TILE_GRASS ){ //Adicionar novos blocos se necessário
-                if (tPositionEntity->iPosX + tScaleEntity.iWidth  >= tPositionTile.iPosX    &&
-                    tPositionTile.iPosX   + TILE_SCALE            >= tPositionEntity->iPosX &&
-                    tPositionEntity->iPosY + tScaleEntity.iHeight >= tPositionTile.iPosY    &&
-                    tPositionTile.iPosY   + TILE_SCALE            >= tPositionEntity->iPosY ){
+            if (eTileType != TILE_AIR){ //Adicionar novos blocos se necessário
+                if ((tPositionEntity->iPosX + tCollisionBlock.iPosX + tCollisionBlock.iWidth)  >= // Direita p/ Esquerda
+                        (tPositionTile.iPosX)                                                  && 
+                    (tPositionTile.iPosX    + TILE_SCALE)                                      >= // Esquerda p/ Direita
+                        (tPositionEntity->iPosX + tCollisionBlock.iPosX)                       &&  
+                    (tPositionEntity->iPosY + tCollisionBlock.iPosY + tCollisionBlock.iHeight) >= // Cima p/ Baixo
+                        (tPositionTile.iPosY)                                                  && 
+                    (tPositionTile.iPosY    + TILE_SCALE)                                      >= // Baixo p/ Cima
+                        (tPositionEntity->iPosY + tCollisionBlock.iPosY)                       ){ 
                     return true;
                 }
             }

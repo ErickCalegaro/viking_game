@@ -26,7 +26,7 @@ static SDL_Rect        gtSourceRect;
 static SDL_Rect        gtDestRect;
 static SDL_Texture    *gptTextureDirt;
 static SDL_Texture    *gptTextureGrass;
-static int             gaCurrMap[NUM_ROWS][NUM_COLUMNS];
+static e_TileType      gaCurrMap[NUM_ROWS][NUM_COLUMNS];
 
 
 /*****************************************************************************
@@ -85,7 +85,7 @@ e_Ret map_Create(e_State eState)
     return RET_OK;
 }
 
-e_Ret map_Load(int aNewMap[NUM_ROWS][NUM_COLUMNS])
+e_Ret map_Load(e_TileType aNewMap[NUM_ROWS][NUM_COLUMNS])
 {
     for (int iRow = 0; iRow < NUM_ROWS; iRow++){
         for (int iColumn = 0; iColumn < NUM_COLUMNS; iColumn++){
