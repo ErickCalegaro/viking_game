@@ -63,7 +63,7 @@ e_Ret vector_Divide(EntityHandle hEntityHandle, int iPosX, int iPosY);
  * \brief Retorna o valor do eixo X da entidade referenciada.
  * \param hEntityHandle Handle da entidade.
  * \returns Caso sucesso, retorna o valor de iPosX da entidade;
- *          Caso falha, retorna -1;
+ *          Caso falha, retorna RET_NEGATIVE;
  */
 int vector_GetX(EntityHandle hEntityHandle);
 
@@ -71,7 +71,7 @@ int vector_GetX(EntityHandle hEntityHandle);
  * \brief Retorna o valor do eixo Y da entidade referenciada.
  * \param hEntityHandle Handle da entidade.
  * \returns Caso sucesso, retorna o valor de iPosY da entidade;
- *          Caso falha, retorna -1;
+ *          Caso falha, retorna RET_NEGATIVE;
  */
 int vector_GetY(EntityHandle hEntityHandle);
 

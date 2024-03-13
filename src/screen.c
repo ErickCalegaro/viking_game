@@ -68,13 +68,13 @@ static e_Ret screen_DrawBackground(void)
 {
     e_Ret eRet = RET_OK;
     eRet = SDL_SetRenderDrawColor(gptRenderer, 255, 120, 97, 255);
-    if (eRet < 0) {
+    if (eRet < RET_OK) {
         printf("Nao foi possivel definir a cor de fundo! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
 
     eRet = screen_Render();
-    if (eRet < 0) {
+    if (eRet) {
         printf("Nao foi possivel renderizar a tela!\n");
         return RET_SDL_ERROR;
     }
@@ -95,7 +95,7 @@ static e_Ret screen_CreatePlayer(void)
     }
 
     ghPlayerHandle = entity_Create();
-    if (ghPlayerHandle < RET_OK){
+    if (ghPlayerHandle == RET_NEGATIVE){
         printf("Nao foi possivel criar a entidade Player!\n");
         return RET_INIT_ERROR;
     }
@@ -156,7 +156,7 @@ static e_Ret screen_CreateEnemy(void)
     }
 
     ghEnemyHandle = entity_Create();
-    if (ghEnemyHandle < RET_OK){
+    if (ghEnemyHandle == RET_NEGATIVE){
         printf("Nao foi possivel criar a entidade Enemy!\n");
         return RET_INIT_ERROR;
     }
@@ -189,12 +189,12 @@ static e_Ret screen_CreateEnemy(void)
 
 e_Ret screen_InitSDL(void)
 { 
-    if (TTF_Init() < 0) {
+    if (TTF_Init() < RET_OK) {
         printf("Fontes nao puderam ser inicializadas! TTF_Error: %s\n", TTF_GetError());
         return RET_INIT_ERROR;
     }
     
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) < RET_OK) {
         printf("SDL nao pode ser inicializado! SDL_Error: %s\n", SDL_GetError());
         return RET_INIT_ERROR;
     }
@@ -283,7 +283,7 @@ e_Ret screen_Render(void)
 
     //Limpa a tela
     eRet = SDL_RenderClear(gptRenderer);
-    if (eRet < 0) {
+    if (eRet < RET_OK) {
         printf("Nao foi possivel limpar o render! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }

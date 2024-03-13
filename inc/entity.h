@@ -77,7 +77,7 @@ void entity_Init(void);
  * \brief Inicializa uma nova entidade na estrutura global gtComponents
  * \param void
  * \returns Caso sucesso, retorna o Handle(ou ID primario) da entidade; 
- *          Caso falha, retorna -1;
+ *          Caso falha, retorna RET_NEGATIVE;
  */
 EntityHandle entity_Create(void);
 

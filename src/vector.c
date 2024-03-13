@@ -156,7 +156,7 @@ int vector_GetX(EntityHandle hEntityHandle)
     tTempPosition.hEntityID = hEntityHandle;
     if (entity_CheckPosition(&tTempPosition)){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
-        return -1;
+        return RET_NEGATIVE;
     }
 
     return tTempPosition.iPosX;
@@ -169,7 +169,7 @@ int vector_GetY(EntityHandle hEntityHandle)
     tTempPosition.hEntityID = hEntityHandle;
     if (entity_CheckPosition(&tTempPosition)){
         printf("Nao foi possivel obter as posicoes da entidade!\n");
-        return -1;
+        return RET_NEGATIVE;
     }
 
     return tTempPosition.iPosY;

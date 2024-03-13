@@ -61,7 +61,7 @@ e_Ret texture_Draw(SDL_Texture *ptTexture, SDL_Rect tSourceRect, SDL_Rect tDestR
                                 ptTexture, 
                                 &tSourceRect, 
                                 &tDestRect);
-    if (eRet < 0) {
+    if (eRet < RET_OK) {
         printf("Nao foi possivel renderizar a textura! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
