@@ -45,8 +45,7 @@ static int entity_GetNewID(void);
  * \brief Obtem o index do componente de acordo com o handle informado.
  * \param hHandle Handle(ou ID primario) da entidade, que foi retornado por entity_Create;
  * \returns Caso sucesso, retorna o index fisico do componente em gtComponents; 
- *          Caso o handle seja inválido retorna -1;
- *          Caso não encontre o id com o handle informado retorna -2;
+ *          Caso o handle seja inválido ou não encontre o id retorna RET_NEGATIVE;
  */
 static int entity_GetIndexByHandle(EntityHandle hHandle);
 
@@ -63,7 +62,7 @@ static int entity_GetIndexByHandle(EntityHandle hHandle)
 {
     if (hHandle < 0){
         printf("Handle invlido informado!\n");
-        return -1;
+        return RET_NEGATIVE;
     }
     
     for (int i = 0; i < MAX_COMPONENTS; i++){
@@ -73,7 +72,7 @@ static int entity_GetIndexByHandle(EntityHandle hHandle)
     }
 
     printf("Nao foi possivel encontrar o id do handle informado!\n");
-    return -2;
+    return RET_NEGATIVE;
 }
 
 /*****************************************************************************
@@ -92,7 +91,7 @@ EntityHandle entity_Create(void)
     // int iLocalIndex = entity_GetFreeIndex(); // !TODO: implementar isto para ser usado no [] 
     if(iLocalID > MAX_COMPONENTS){
         printf("Quantidade maxima de entidades excedido!\n");
-        return -1;
+        return RET_NEGATIVE;
     }
 
     gtComponents.atHealthComponents[iLocalID].hEntityID = iLocalID; //[iLocalID] se tornara um problema
@@ -108,7 +107,7 @@ EntityHandle entity_Create(void)
 e_Ret entity_UpdateHealth(t_Health * ptHealth)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptHealth->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -122,7 +121,7 @@ e_Ret entity_UpdateHealth(t_Health * ptHealth)
 e_Ret entity_UpdatePosition(t_Position * ptPosition)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptPosition->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -141,19 +140,19 @@ e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity)
     tNewPosition.hEntityID = ptVelocity->hEntityID;
     
     iEntityIndex = entity_GetIndexByHandle(ptVelocity->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
 
     tNewPosition.iPosX = vector_GetX(ptVelocity->hEntityID);
-    if (tNewPosition.iPosX < 0){
+    if (tNewPosition.iPosX == RET_NEGATIVE){
         printf("Erro ao resgatar o Vetor X da entidade!\n");
         return RET_POS_ERROR;
     }
 
     tNewPosition.iPosY = vector_GetY(ptVelocity->hEntityID);
-    if (tNewPosition.iPosY < 0){
+    if (tNewPosition.iPosY == RET_NEGATIVE){
         printf("Erro ao resgatar o Vetor Y da entidade!\n");
         return RET_POS_ERROR;
     }
@@ -176,7 +175,7 @@ e_Ret entity_UpdateVelocity(t_Velocity * ptVelocity)
 e_Ret entity_UpdateScale(t_Scale * ptScale)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptScale->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -190,7 +189,7 @@ e_Ret entity_UpdateScale(t_Scale * ptScale)
 e_Ret entity_UpdateCollision(t_Collision * ptCollision)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptCollision->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -207,7 +206,7 @@ e_Ret entity_UpdateCollision(t_Collision * ptCollision)
 e_Ret entity_CheckHealth(t_Health * ptHealth)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptHealth->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -221,7 +220,7 @@ e_Ret entity_CheckHealth(t_Health * ptHealth)
 e_Ret entity_CheckPosition(t_Position * ptPosition)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptPosition->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -238,7 +237,7 @@ e_Ret entity_CheckPosition(t_Position * ptPosition)
 e_Ret entity_CheckScale(t_Scale * ptScale)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptScale->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }
@@ -252,7 +251,7 @@ e_Ret entity_CheckScale(t_Scale * ptScale)
 e_Ret entity_CheckCollision(t_Collision * ptCollision)
 {
     int iEntityIndex = entity_GetIndexByHandle(ptCollision->hEntityID);
-    if (iEntityIndex < RET_OK){
+    if (iEntityIndex == RET_NEGATIVE){
         printf("Index invalido!\n");
         return RET_INV_PARAM;
     }

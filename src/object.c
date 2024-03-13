@@ -75,7 +75,7 @@ e_Ret object_Render(t_GameObject * ptGameObject)
                                 ptGameObject->ptTexture, 
                                 &ptGameObject->tSourceRect, 
                                 &ptGameObject->tDestRect);
-    if (eRet < 0) {
+    if (eRet < RET_OK) {
         printf("Nao foi possivel renderizar a textura! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
