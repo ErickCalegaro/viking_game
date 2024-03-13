@@ -77,8 +77,7 @@ bool collision_Check(EntityHandle hEntityHandle)
             tPositionTile.iPosX = iColumn * TILE_SCALE;
             tPositionTile.iPosY = iRow * TILE_SCALE;
 
-            if (eTileType == TILE_DIRT ||
-                eTileType == TILE_GRASS ){ //Adicionar novos blocos se necessário
+            if (eTileType != TILE_AIR){
                 if (tPositionEntity.iPosX + tScaleEntity.iWidth  >= tPositionTile.iPosX    &&
                     tPositionTile.iPosX   + TILE_SCALE           >= tPositionEntity.iPosX  &&
                     tPositionEntity.iPosY + tScaleEntity.iHeight >= tPositionTile.iPosY    &&
@@ -113,7 +112,7 @@ bool collision_CheckVector(t_Position * tPositionEntity)
             tPositionTile.iPosX = iColumn * TILE_SCALE;
             tPositionTile.iPosY = iRow * TILE_SCALE;
 
-            if (eTileType != TILE_AIR){ //Adicionar novos blocos se necessário
+            if (eTileType != TILE_AIR){
                 if ((tPositionEntity->iPosX + tCollisionBlock.iPosX + tCollisionBlock.iWidth)  >= // Direita p/ Esquerda
                         (tPositionTile.iPosX)                                                  && 
                     (tPositionTile.iPosX    + TILE_SCALE)                                      >= // Esquerda p/ Direita
