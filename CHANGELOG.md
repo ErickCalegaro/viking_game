@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.07] - 12-03-2024
+
+### Adicionado
+- Sistema de colisão do personagem com o level design
+
 ## [0.0.06] - 11-03-2024
 
 ### Adicionado

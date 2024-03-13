@@ -9,9 +9,9 @@
  * Preprocessor Macros and Defines
  *****************************************************************************/
 
-#define NUM_ROWS    20
-#define NUM_COLUMNS 25
-#define TILE_SCALE  32
+#define NUM_ROWS        20
+#define NUM_COLUMNS     25
+#define TILE_SCALE      32
 
 #define TILE_DIRT_L1    "level1/dirt.png"
 #define TILE_GRASS_L1   "level1/grass.png"
@@ -24,6 +24,9 @@
 #define TILE_DIRT_L5    "level5/dirt.png"
 #define TILE_GRASS_L5   "level5/grass.png"
 
+#define A               0 // Ar
+#define T               1 // Terra
+#define G               2 // Grama
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
