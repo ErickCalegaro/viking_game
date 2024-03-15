@@ -15,8 +15,15 @@
  *****************************************************************************/
 
 typedef struct {
+    bool         bAnimated;
+    int          iFrames;
+    int          iSpeed;
+} t_Sprite;
+
+typedef struct {
     int          iPosX;
     int          iPosY;
+    t_Sprite     tSprite;
     SDL_Rect     tSourceRect;
     SDL_Rect     tDestRect;
     SDL_Texture *ptTexture;

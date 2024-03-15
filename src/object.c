@@ -71,12 +71,9 @@ e_Ret object_Update(t_GameObject * ptGameObject, t_Position * ptPosition)
 
 e_Ret object_Render(t_GameObject * ptGameObject)
 {
-    e_Ret eRet = SDL_RenderCopy(gptRenderer, 
-                                ptGameObject->ptTexture, 
-                                &ptGameObject->tSourceRect, 
-                                &ptGameObject->tDestRect);
-    if (eRet < RET_OK) {
-        printf("Nao foi possivel renderizar a textura! SDL_Error: %s\n", SDL_GetError());
+    e_Ret eRet = sprite_Render(ptGameObject);
+    if (eRet != RET_OK) {
+        printf("Nao foi possivel renderizar o sprite! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
 

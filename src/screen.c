@@ -296,6 +296,9 @@ e_Ret screen_Render(void)
     }
 
     //Renderiza o jogador
+    gtPlayerObject.tSprite.bAnimated = true;
+    gtPlayerObject.tSprite.iFrames = 4;
+    gtPlayerObject.tSprite.iFrames = 100;
     eRet = object_Render(&gtPlayerObject);
     if (eRet){
         printf("Nao foi possivel renderizar o objeto Player!\n");
