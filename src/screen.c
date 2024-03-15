@@ -67,17 +67,17 @@ static e_Ret screen_CreateEnemy(void);
 static e_Ret screen_DrawBackground(void)
 {
     e_Ret eRet = RET_OK;
-    eRet = SDL_SetRenderDrawColor(gptRenderer, 255, 120, 97, 255);
+    eRet = SDL_SetRenderDrawColor(gptRenderer, 31, 31, 31, 255);
     if (eRet < RET_OK) {
         printf("Nao foi possivel definir a cor de fundo! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
     }
 
-    eRet = screen_Render();
-    if (eRet) {
-        printf("Nao foi possivel renderizar a tela!\n");
-        return RET_SDL_ERROR;
-    }
+    // eRet = screen_Render();
+    // if (eRet) {
+    //     printf("Nao foi possivel renderizar a tela!\n");
+    //     return RET_SDL_ERROR;
+    // }
 
     return RET_OK;
 }
@@ -93,6 +93,17 @@ static e_Ret screen_CreatePlayer(void)
         printf("Nao foi possivel criar o objeto Player!\n");
         return RET_INIT_ERROR;
     }
+
+    //Dados de vetor do personagem
+    gtPlayerObject.tSourceRect.h = 64;
+    gtPlayerObject.tSourceRect.w = 64;
+    gtPlayerObject.tSourceRect.x = 0;
+    gtPlayerObject.tSourceRect.y = 0;
+
+    //Dados de animação do personagem
+    gtPlayerObject.tSprite.bAnimated = true;
+    gtPlayerObject.tSprite.iSpeed = 150;
+    gtPlayerObject.tSprite.iFrames = 7;
 
     ghPlayerHandle = entity_Create();
     if (ghPlayerHandle == RET_NEGATIVE){
@@ -296,9 +307,6 @@ e_Ret screen_Render(void)
     }
 
     //Renderiza o jogador
-    gtPlayerObject.tSprite.bAnimated = true;
-    gtPlayerObject.tSprite.iFrames = 4;
-    gtPlayerObject.tSprite.iFrames = 100;
     eRet = object_Render(&gtPlayerObject);
     if (eRet){
         printf("Nao foi possivel renderizar o objeto Player!\n");
