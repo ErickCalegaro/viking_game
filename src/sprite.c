@@ -27,6 +27,21 @@
  * Private Function Prototypes
  *****************************************************************************/
 
+/**
+ * \brief Gerencia um objeto grafico utilizando um sprite animado de n imagens.
+ * \param ptGameObject Referencia para ptGameObject, onde tSprite contem os dados para animação.
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+e_Ret sprite_Animated(t_GameObject * ptGameObject);
+
+/**
+ * \brief Cria um objeto grafico utilizando um sprite x64 estatico.
+ * \param ptGameObject Referencia para struct do tipo t_GameObject que contem os dados da textura
+ * \returns RET_OK - Caso sucesso; 
+ *          RET_SDL_ERROR - Caso falhe; 
+ */
+e_Ret sprite_Static(t_GameObject * ptGameObject);
 
 /*****************************************************************************
  * Private Function Definitions
