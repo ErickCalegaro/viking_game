@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.08] - 14-03-2024
+
+### Adicionado
+- Animação do personagem em idle
+
 ## [0.0.07] - 12-03-2024
 
 ### Adicionado

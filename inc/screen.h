@@ -14,6 +14,7 @@
 #include "object.h"
 #include "map.h"
 #include "collision.h"
+#include "sprite.h"
 
 #include "level_1.h"
 
