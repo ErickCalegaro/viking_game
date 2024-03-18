@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.09] - 17-03-2024
+
+### Adicionado
+- Animação do personagem andando para os dois lados
+
 ## [0.0.08] - 14-03-2024
 
 ### Adicionado

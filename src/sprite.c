@@ -52,10 +52,13 @@ e_Ret sprite_Animated(t_GameObject * ptGameObject)
     ptGameObject->tSourceRect.x = ptGameObject->tSourceRect.w * ((int)(SDL_GetTicks() / ptGameObject->tSprite.iSpeed) % ptGameObject->tSprite.iFrames);
     ptGameObject->tSourceRect.y = ptGameObject->tSourceRect.h * ptGameObject->tSprite.eAnimation;
 
-    int iRet = SDL_RenderCopy(gptRenderer, 
+    int iRet = SDL_RenderCopyEx(gptRenderer, 
                                 ptGameObject->ptTexture, 
                                 &ptGameObject->tSourceRect, 
-                                &ptGameObject->tDestRect);
+                                &ptGameObject->tDestRect,
+                                0,
+                                NULL,
+                                ptGameObject->tSprite.eFlip);
     if (iRet < RET_OK) {
         printf("Nao foi possivel renderizar a textura animada! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;

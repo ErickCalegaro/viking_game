@@ -21,10 +21,11 @@ typedef enum e_Animation_tag {
 } e_Animation;
 
 typedef struct {
-    e_Animation  eAnimation;
-    bool         bAnimated;
-    int          iFrames;
-    int          iSpeed;
+    e_Animation         eAnimation;
+    bool                bAnimated;
+    int                 iFrames;
+    int                 iSpeed;
+    SDL_RendererFlip    eFlip;
 } t_Sprite;
 
 typedef struct {

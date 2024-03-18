@@ -56,6 +56,7 @@ e_Ret keyboard_HandleEvents(void)
             case SDL_SCANCODE_A:
                 ptPlayerVelocity.iVelocityX = -1;
                 gtPlayerObject.tSprite.eAnimation = ANIM_WALK;
+                gtPlayerObject.tSprite.eFlip = SDL_FLIP_HORIZONTAL;
                 break;
             case SDL_SCANCODE_S:
                 ptPlayerVelocity.iVelocityY = 1;
@@ -64,6 +65,7 @@ e_Ret keyboard_HandleEvents(void)
             case SDL_SCANCODE_D:
                 ptPlayerVelocity.iVelocityX = 1;
                 gtPlayerObject.tSprite.eAnimation = ANIM_WALK;
+                gtPlayerObject.tSprite.eFlip = SDL_FLIP_NONE;
                 break;
             default:
                 break;
