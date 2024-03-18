@@ -38,6 +38,8 @@
  *****************************************************************************/
 
 extern SDL_Renderer *gptRenderer;
+extern t_GameObject gtPlayerObject;
+extern t_GameObject gtEnemyObject;
 
 /*****************************************************************************
  * Public Function Prototypes
