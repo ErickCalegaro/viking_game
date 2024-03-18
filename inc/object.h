@@ -14,10 +14,18 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
+typedef enum e_Animation_tag {
+    ANIM_IDLE = 0,
+    ANIM_WALK,
+    ANIM_JUMP,
+} e_Animation;
+
 typedef struct {
-    bool         bAnimated;
-    int          iFrames;
-    int          iSpeed;
+    e_Animation         eAnimation;
+    bool                bAnimated;
+    int                 iFrames;
+    int                 iSpeed;
+    SDL_RendererFlip    eFlip;
 } t_Sprite;
 
 typedef struct {

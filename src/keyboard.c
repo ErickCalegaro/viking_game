@@ -22,6 +22,7 @@
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
+static SDL_Scancode geLastKey;
 
 /*****************************************************************************
  * Private Function Prototypes
@@ -40,24 +41,31 @@
 e_Ret keyboard_HandleEvents(void)
 {
     e_Ret eRet = RET_OK;
-    t_Velocity ptPlayerVelocity = {0x00};
+    static t_Velocity ptPlayerVelocity;
     ptPlayerVelocity.hEntityID = ghPlayerHandle;
 
     if (gtEvent.type == SDL_KEYDOWN)
     {
-        switch (gtEvent.key.keysym.sym)
+        geLastKey = gtEvent.key.keysym.scancode;
+        switch (geLastKey)
         {
-            case SDLK_w:
+            case SDL_SCANCODE_W:
                 ptPlayerVelocity.iVelocityY = -1;
+                gtPlayerObject.tSprite.eAnimation = ANIM_WALK;
                 break;
-            case SDLK_a:
+            case SDL_SCANCODE_A:
                 ptPlayerVelocity.iVelocityX = -1;
+                gtPlayerObject.tSprite.eAnimation = ANIM_WALK;
+                gtPlayerObject.tSprite.eFlip = SDL_FLIP_HORIZONTAL;
                 break;
-            case SDLK_s:
+            case SDL_SCANCODE_S:
                 ptPlayerVelocity.iVelocityY = 1;
+                gtPlayerObject.tSprite.eAnimation = ANIM_WALK;
                 break;
-            case SDLK_d:
+            case SDL_SCANCODE_D:
                 ptPlayerVelocity.iVelocityX = 1;
+                gtPlayerObject.tSprite.eAnimation = ANIM_WALK;
+                gtPlayerObject.tSprite.eFlip = SDL_FLIP_NONE;
                 break;
             default:
                 break;
@@ -66,29 +74,33 @@ e_Ret keyboard_HandleEvents(void)
 
     if (gtEvent.type == SDL_KEYUP)
     {
-        switch (gtEvent.key.keysym.sym)
-        {
-            case SDLK_w:
+        geLastKey = gtEvent.key.keysym.scancode;
+        switch (geLastKey){
+            case SDL_SCANCODE_W:
                 ptPlayerVelocity.iVelocityY = 0;
+                gtPlayerObject.tSprite.eAnimation = ANIM_IDLE;
                 break;
-            case SDLK_a:
+            case SDL_SCANCODE_A:
                 ptPlayerVelocity.iVelocityX = 0;
+                gtPlayerObject.tSprite.eAnimation = ANIM_IDLE;
                 break;
-            case SDLK_s:
+            case SDL_SCANCODE_S:
                 ptPlayerVelocity.iVelocityY = 0;
+                gtPlayerObject.tSprite.eAnimation = ANIM_IDLE;
                 break;
-            case SDLK_d:
+            case SDL_SCANCODE_D:
                 ptPlayerVelocity.iVelocityX = 0;
+                gtPlayerObject.tSprite.eAnimation = ANIM_IDLE;
                 break;
             default:
                 break;
         }
     }
     
-    if (gtEvent.key.keysym.sym == SDLK_w ||
-        gtEvent.key.keysym.sym == SDLK_a ||
-        gtEvent.key.keysym.sym == SDLK_s ||
-        gtEvent.key.keysym.sym == SDLK_d ){
+    if (geLastKey == SDL_SCANCODE_W ||
+        geLastKey == SDL_SCANCODE_A ||
+        geLastKey == SDL_SCANCODE_S ||
+        geLastKey == SDL_SCANCODE_D ){
     
         eRet = entity_UpdateVelocity(&ptPlayerVelocity);
         if (eRet != RET_OK && eRet != RET_COLLISION){

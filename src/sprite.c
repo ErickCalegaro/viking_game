@@ -49,18 +49,16 @@ e_Ret sprite_Static(t_GameObject * ptGameObject);
 
 e_Ret sprite_Animated(t_GameObject * ptGameObject)
 {
-    // printf("PASSOU AQUI 1\n");
-    // printf("SDL_GetTicks()                = [%d]\n", SDL_GetTicks());
-    // printf("ptGameObject->tSourceRect.w   = [%d]\n", ptGameObject->tSourceRect.w);
-    // printf("ptGameObject->tSprite.iSpeed  = [%d]\n", ptGameObject->tSprite.iSpeed);
-    // printf("ptGameObject->tSprite.iFrames = [%d]\n", ptGameObject->tSprite.iFrames);
-    // printf("PASSOU AQUI 2\n");
     ptGameObject->tSourceRect.x = ptGameObject->tSourceRect.w * ((int)(SDL_GetTicks() / ptGameObject->tSprite.iSpeed) % ptGameObject->tSprite.iFrames);
-    // printf("PASSOU AQUI 3\n");
-    int iRet = SDL_RenderCopy(gptRenderer, 
+    ptGameObject->tSourceRect.y = ptGameObject->tSourceRect.h * ptGameObject->tSprite.eAnimation;
+
+    int iRet = SDL_RenderCopyEx(gptRenderer, 
                                 ptGameObject->ptTexture, 
                                 &ptGameObject->tSourceRect, 
-                                &ptGameObject->tDestRect);
+                                &ptGameObject->tDestRect,
+                                0,
+                                NULL,
+                                ptGameObject->tSprite.eFlip);
     if (iRet < RET_OK) {
         printf("Nao foi possivel renderizar a textura animada! SDL_Error: %s\n", SDL_GetError());
         return RET_SDL_ERROR;
@@ -91,8 +89,6 @@ e_Ret sprite_Static(t_GameObject * ptGameObject)
 e_Ret sprite_Render(t_GameObject * ptGameObject)
 {
     e_Ret eRet = RET_OK;
-
-    // printf("ptGameObject->tSprite.bAnimated = [%d]\n", ptGameObject->tSprite.bAnimated);
 
     if (ptGameObject->tSprite.bAnimated){
         eRet = sprite_Animated(ptGameObject);

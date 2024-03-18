@@ -101,9 +101,7 @@ static e_Ret screen_CreatePlayer(void)
     gtPlayerObject.tSourceRect.y = 0;
 
     //Dados de animação do personagem
-    gtPlayerObject.tSprite.bAnimated = true;
-    gtPlayerObject.tSprite.iSpeed = 150;
-    gtPlayerObject.tSprite.iFrames = 7;
+    gtPlayerObject.tSprite.eAnimation = ANIM_IDLE;
 
     ghPlayerHandle = entity_Create();
     if (ghPlayerHandle == RET_NEGATIVE){

@@ -11,7 +11,9 @@
         "sdl_keycode.h": "c",
         "sdl_keyboard.h": "c",
         "sdl_error.h": "c",
-        "sdl_ttf.h": "c"
+        "sdl_ttf.h": "c",
+        "entity.h": "c",
+        "control.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "search.exclude": {

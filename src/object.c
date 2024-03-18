@@ -66,6 +66,25 @@ e_Ret object_Update(t_GameObject * ptGameObject, t_Position * ptPosition)
 
 e_Ret object_Render(t_GameObject * ptGameObject)
 {
+
+    if (ptGameObject->tSprite.eAnimation == ANIM_IDLE){
+        ptGameObject->tSprite.bAnimated = true;
+        ptGameObject->tSprite.iSpeed = 150;
+        ptGameObject->tSprite.iFrames = 7;
+    }
+
+    if (ptGameObject->tSprite.eAnimation == ANIM_WALK){
+        ptGameObject->tSprite.bAnimated = true;
+        ptGameObject->tSprite.iSpeed = 150;
+        ptGameObject->tSprite.iFrames = 6;
+    }
+    
+    if (ptGameObject->tSprite.eAnimation == ANIM_JUMP){
+        ptGameObject->tSprite.bAnimated = true;
+        ptGameObject->tSprite.iSpeed = 150;
+        ptGameObject->tSprite.iFrames = 5;
+    }
+
     e_Ret eRet = sprite_Render(ptGameObject);
     if (eRet != RET_OK) {
         printf("Nao foi possivel renderizar o objeto!\n");
