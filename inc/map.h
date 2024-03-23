@@ -10,30 +10,21 @@
  *****************************************************************************/
 
 #define NUM_ROWS        20
-#define NUM_COLUMNS     25
+#define NUM_COLUMNS     40
 #define TILE_SCALE      32
 
-#define TILE_DIRT_L1    "level1/dirt.png"
-#define TILE_GRASS_L1   "level1/grass.png"
-#define TILE_DIRT_L2    "level2/dirt.png"
-#define TILE_GRASS_L2   "level2/grass.png"
-#define TILE_DIRT_L3    "level3/dirt.png"
-#define TILE_GRASS_L3   "level3/grass.png"
-#define TILE_DIRT_L4    "level4/dirt.png"
-#define TILE_GRASS_L4   "level4/grass.png"
-#define TILE_DIRT_L5    "level5/dirt.png"
-#define TILE_GRASS_L5   "level5/grass.png"
-
-#define A               0 // Ar
-#define T               1 // Terra
-#define G               2 // Grama
+#define TILE_MAP_L1    "level1/tileset.png"
+#define TILE_MAP_L2    "level2/tileset.png"
+#define TILE_MAP_L3    "level3/tileset.png"
+#define TILE_MAP_L4    "level4/tileset.png"
+#define TILE_MAP_L5    "level5/tileset.png"
 
 /*****************************************************************************
  * Typedefs and Variable Definitions
  *****************************************************************************/
 
 typedef enum e_TileType_tag {
-    TILE_AIR = 0,
+    TILE_AIR = 12,
     TILE_DIRT,
     TILE_GRASS,
 } e_TileType;

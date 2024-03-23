@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.10] - 23-03-2024
+
+### Adicionado
+- Mecanica de carregamento de mapa com Tileset
+- Tilemap do nivel 1 e assets do PyxelEdit
+
 ## [0.0.09] - 17-03-2024
 
 ### Adicionado
