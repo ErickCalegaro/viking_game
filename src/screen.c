@@ -88,7 +88,7 @@ static e_Ret screen_CreatePlayer(void)
     
     memset(&gtPlayerObject, 0x00, sizeof(gtPlayerObject));
 
-    eRet = object_Create(&gtPlayerObject, TEXTURE_PLAYER, 0, 0);
+    eRet = object_Create(&gtPlayerObject, TEXTURE_PLAYER, gtPlayerObject.tSourceRect.x, gtPlayerObject.tSourceRect.y);
     if (eRet){
         printf("Nao foi possivel criar o objeto Player!\n");
         return RET_INIT_ERROR;
